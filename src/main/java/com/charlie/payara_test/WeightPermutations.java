@@ -1,6 +1,5 @@
 package com.charlie.payara_test;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
