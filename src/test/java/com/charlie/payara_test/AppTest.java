@@ -49,11 +49,13 @@ public class AppTest {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //check the file matches the output
             for (int i = 0; i < output.size(); i++) {
             	assertTrue(Arrays.toString(output.get(i)).equals(filePermutations.get(i)));
             }
-            HashSet<Double[]> testSet = new HashSet<Double[]>();
             
+            //check there are no duplicates
+            HashSet<Double[]> testSet = new HashSet<Double[]>();
             testSet.addAll(output);
             assertTrue(testSet.size() == 120);
             
