@@ -131,8 +131,44 @@ public class AppTest {
 		Double[] weights = {35.0, 10.0, 11.0, 4.0, 1.0};
 		List<Touple> result = cmp.calculateMinimumPrice(weights);
 		System.out.println(Arrays.toString(result.toArray()));
-		assertTrue(("[Touple [first=110.0, second=Cost], Touple [first=10.0, second=FREE_UNDER_7KG_OVERWEIGHT], Touple [first=35.0, second=FREE_UNDER_25KG_OVERWEIGHT], Touple [first=11.0, second=FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT], Touple [first=4.0, second=FEE_UNDER_7KG], Touple [first=1.0, second=FEE_UNDER_7KG]]"
+		assertTrue(("[Touple [first=110.0, second=Cost], "
+				+ "Touple [first=10.0, second=FREE_UNDER_7KG_OVERWEIGHT], "
+				+ "Touple [first=35.0, second=FREE_UNDER_25KG_OVERWEIGHT], "
+				+ "Touple [first=11.0, second=FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT], "
+				+ "Touple [first=4.0, second=FEE_UNDER_7KG], "
+				+ "Touple [first=1.0, second=FEE_UNDER_7KG]]"
 				).equals(Arrays.toString(result.toArray())));
 	}
+	@Test
+	public void calculatePrice() {
+		// Given array of 5 weights in kilograms
+		Double[] weights = {10.0, 35.0, 11.0, 4.0, 1.0};
+		String[] names = {"FREE_UNDER_7KG_OVERWEIGHT",
+				"FREE_UNDER_25KG_OVERWEIGHT",
+				"FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT",
+				"FEE_UNDER_7KG",
+				"FEE_UNDER_7KG"};
+		wtcc.clear();
+		Double result = wtcc.processArrayOfWeightsGivenNames(weights, names);
+		System.out.println("Result="+result.toString());
+		assertTrue("110.0".equals(result.toString()));
 
+	}
+
+	@Test
+	public void calculatePrice2() {
+		// Given array of 5 weights in kilograms
+		Double[] weights = {35.0, 10.0, 11.0, 4.0, 1.0};
+		String[] names = {"FREE_UNDER_7KG_OVERWEIGHT",
+				"FREE_UNDER_25KG_OVERWEIGHT",
+				"FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT",
+				"FEE_UNDER_7KG",
+				"FEE_UNDER_7KG"};
+		wtcc.clear();
+		Double result = wtcc.processArrayOfWeightsGivenNames(weights, names);
+		System.out.println("Result="+result.toString());
+		assertTrue("185.0".equals(result.toString()));
+
+	}
+	
 }
