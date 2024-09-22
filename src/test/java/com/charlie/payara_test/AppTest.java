@@ -15,6 +15,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.charlie.payara_test.CalculateMinimumPrice.Touple;
+
 /**
  * Unit test for simple App.
  */
@@ -22,11 +24,13 @@ public class AppTest {
 
 	private static WeightPermutations wp;
 	private static WeightsToCostConversion wtcc;
+	private static CalculateMinimumPrice cmp;
 
 	@BeforeAll
 	public static void start() {
 		wp = new WeightPermutations();
 		wtcc = new WeightsToCostConversion();
+		cmp = new CalculateMinimumPrice(wp,wtcc);
 	}
 	/**
 	 * Rigorous Test :-)
@@ -47,16 +51,16 @@ public class AppTest {
 		wp.generatePermutations(weightsPerm, 0);
 		List<Double[]> outputPerm = wp.getList();
 		wp.clear();
-		//		try (BufferedWriter writer = new BufferedWriter(new FileWriter("permutations.txt"))) {
-		//			// Generate and write all permutations
-		//			for (int i = 0; i < outputPerm.size(); i++) {
-		//				writer.write(Arrays.toString(outputPerm.get(i)));
-		//				writer.newLine();
-		//			}
-		//			System.out.println("All permutations have been written to permutations.txt");
-		//		} catch (IOException e) {
-		//			e.printStackTrace();
-		//		}
+				try (BufferedWriter writer = new BufferedWriter(new FileWriter("permutations.txt"))) {
+					// Generate and write all permutations
+					for (int i = 0; i < outputPerm.size(); i++) {
+						writer.write(Arrays.toString(outputPerm.get(i)));
+						writer.newLine();
+					}
+					System.out.println("All permutations have been written to permutations.txt");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		List<String> filePermutations = new ArrayList<>();
 		try {
 			filePermutations = Files.readAllLines(Paths.get("permutations.txt"));
@@ -91,19 +95,19 @@ public class AppTest {
 			listOfSelected.add(wtcc.getSelected());
 			wtcc.clear();
 		}
-//		try (BufferedWriter writer = new BufferedWriter(new FileWriter("costs.txt"))) {
-//			// Generate and write all permutations
-//			for (int i = 0; i < output.size(); i++) {
-//				writer.write(""+listOfCosts.get(i)+Arrays.toString(output.get(i)));
-//				for (String item : listOfSelected.get(i)){
-//					writer.write(""+item+",");
-//				}
-//				writer.newLine();
-//			}
-//			System.out.println("All permutations have been written to costs.txt");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("costs.txt"))) {
+			// Generate and write all permutations
+			for (int i = 0; i < output.size(); i++) {
+				writer.write(""+listOfCosts.get(i)+Arrays.toString(output.get(i)));
+				for (String item : listOfSelected.get(i)){
+					writer.write(""+item+",");
+				}
+				writer.newLine();
+			}
+			System.out.println("All permutations have been written to costs.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		List<String> filePermutations = new ArrayList<>();
 		try {
@@ -121,4 +125,14 @@ public class AppTest {
 		}
 
 	}
+	@Test
+	public void calculateMinPrice() {
+		// Given array of 5 weights in kilograms
+		Double[] weights = {35.0, 10.0, 11.0, 4.0, 1.0};
+		List<Touple> result = cmp.calculateMinimumPrice(weights);
+		System.out.println(Arrays.toString(result.toArray()));
+		assertTrue(("[Touple [first=110.0, second=Cost], Touple [first=10.0, second=FREE_UNDER_7KG_OVERWEIGHT], Touple [first=35.0, second=FREE_UNDER_25KG_OVERWEIGHT], Touple [first=11.0, second=FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT], Touple [first=4.0, second=FEE_UNDER_7KG], Touple [first=1.0, second=FEE_UNDER_7KG]]"
+				).equals(Arrays.toString(result.toArray())));
+	}
+
 }

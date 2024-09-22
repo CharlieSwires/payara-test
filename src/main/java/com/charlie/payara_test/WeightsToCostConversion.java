@@ -99,7 +99,7 @@ public class WeightsToCostConversion {
 				case "FEE_UNDER_7KG":
 					if (singles.get("FEE_UNDER_7KG") == USED_MANY)
 						if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
-							sum += item.getPrice() * (weights[i]);
+							sum += item.getPrice();
 							selected.add(item.name());
 							contin = true;
 						} 
@@ -107,11 +107,11 @@ public class WeightsToCostConversion {
 				case "FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT":
 					if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY)
 						if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
-							sum += item.getPrice() * (weights[i]);
+							sum += item.getPrice();
 							selected.add(item.name());
 							contin = true;
 						} else if (weights[i] > item.getUnder()) {
-							sum += item.getPrice() * (item.getUnder());
+							sum += item.getPrice();
 							sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weights[i] - item.getUnder());
 							selected.add(item.name());
 							contin = true;
