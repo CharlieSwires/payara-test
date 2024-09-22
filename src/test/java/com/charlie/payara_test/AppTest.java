@@ -2,6 +2,8 @@ package com.charlie.payara_test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,10 +21,12 @@ import org.junit.jupiter.api.Test;
 public class AppTest {
 
 	private static WeightPermutations wp;
+	private static WeightsToCostConversion wtcc;
 	
 	@BeforeAll
 	public static void start() {
 		wp = new WeightPermutations();
+		wtcc = new WeightsToCostConversion();
 	}
     /**
      * Rigorous Test :-)
@@ -34,15 +38,25 @@ public class AppTest {
     @Test
     public void permutations() {
             // Given array of 5 weights in kilograms
-            Double[] weights = {5.0, 3.0, 2.0, 4.0, 1.0};
+            Double[] weightsPerm = {5.0, 3.0, 2.0, 4.0, 1.0};
             
             // Sort the array in ascending order
-            Arrays.sort(weights);
+            Arrays.sort(weightsPerm);
             
             // Generate and print all permutations
-            wp.generatePermutations(weights, 0);
-            List<Double[]> output = wp.getList();
-
+            wp.generatePermutations(weightsPerm, 0);
+            List<Double[]> outputPerm = wp.getList();
+            wp.clear();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("permutations.txt"))) {
+                // Generate and write all permutations
+            	for (int i = 0; i < outputPerm.size(); i++) {
+                writer.write(Arrays.toString(outputPerm.get(i)));
+            	writer.newLine();
+            	}
+                System.out.println("All permutations have been written to permutations.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             List<String> filePermutations = new ArrayList<>();
             try {
                 filePermutations = Files.readAllLines(Paths.get("permutations.txt"));
@@ -50,14 +64,41 @@ public class AppTest {
                 e.printStackTrace();
             }
             //check the file matches the output
-            for (int i = 0; i < output.size(); i++) {
-            	assertTrue(Arrays.toString(output.get(i)).equals(filePermutations.get(i)));
+            for (int i = 0; i < outputPerm.size(); i++) {
+            	assertTrue(Arrays.toString(outputPerm.get(i)).equals(filePermutations.get(i)));
             }
             
             //check there are no duplicates
             HashSet<Double[]> testSet = new HashSet<Double[]>();
-            testSet.addAll(output);
+            testSet.addAll(outputPerm);
             assertTrue(testSet.size() == 120);
             
+    }
+    @Test
+    public void calculateCost() {
+        // Given array of 5 weights in kilograms
+        Double[] weights = {35.0, 10.0, 11.0, 4.0, 1.0};
+        // Generate and print all permutations
+        wp.generatePermutations(weights, 0);
+        List<Double[]> output = wp.getList();
+        wp.clear();
+        
+        List<Double> listOfCosts = new ArrayList<>();
+        for(Double[] item : output) {
+        	Double cost = wtcc.processArrayOfWeights(item);
+        	listOfCosts.add(cost);
+        	wtcc.clear();
+        }
+           
+        List<String> filePermutations = new ArrayList<>();
+        try {
+            filePermutations = Files.readAllLines(Paths.get("costs.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    	for (int i = 0; i < output.size(); i++) {
+    		assertTrue((""+listOfCosts.get(i)+Arrays.toString(output.get(i))).equals(filePermutations.get(i)));
+    	}
+
     }
 }

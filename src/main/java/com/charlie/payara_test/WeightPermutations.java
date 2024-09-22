@@ -31,6 +31,9 @@ public class WeightPermutations {
     public List<Double[]> getList(){
     	return listOfArrays;
     }
+    public void clear() {
+    		listOfArrays = new ArrayList<Double[]>();
+    }
     // Helper method to swap two elements in the array
     private static void swap(Double[] arr, int i, int j) {
         if (i != j) {
