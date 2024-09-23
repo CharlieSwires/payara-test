@@ -1,12 +1,14 @@
 // src/LuggageCalculator.js
 import React, { useState, useEffect } from 'react';
 
-function LuggageCalculator({ weightsInput, onBack }) {
+function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
   const [data, setData] = useState([]);
   const [rules, setRules] = useState([]);
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState(null);     
   const [result, setResult] = useState('');     // For displaying the result from /cost endpoint
+  const [minimumAmount, setMinimumAmount] = useState(null);
+  const [userDefinedAmount, setUserDefinedAmount] = useState(null);
 
   // Fetch rules from the backend when the component mounts
   useEffect(() => {
@@ -57,6 +59,12 @@ function LuggageCalculator({ weightsInput, onBack }) {
         // Initialize selectedRule for each item
         const dataWithRules = data.map(item => ({ ...item, selectedRule: '' }));
         setData(dataWithRules);
+
+        // Extract the 'Cost' amount
+        const costItem = dataWithRules.find(item => item.enumeration === 'Cost');
+        if (costItem) {
+          setMinimumAmount(parseFloat(costItem.amount));
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -114,6 +122,7 @@ function LuggageCalculator({ weightsInput, onBack }) {
       })
       .then(resultData => {
         setResult(resultData);
+        setUserDefinedAmount(parseFloat(resultData)); // Assuming resultData is a numeric string
         setLoading(false);
       })
       .catch(err => {
@@ -122,6 +131,33 @@ function LuggageCalculator({ weightsInput, onBack }) {
         setResult(err.message);
         setLoading(false);
       });
+  };
+
+  // Function to generate a unique 20-digit transaction ID
+  function generateUniqueId() {
+    const timestamp = Date.now().toString(); // Milliseconds since epoch
+    const randomNum = Math.floor(Math.random() * 1e11).toString(); // Random number up to 1e11
+    return (timestamp + randomNum).slice(0, 20).padEnd(20, '0');
+  }
+
+  const handlePayMinimum = () => {
+    if (minimumAmount !== null) {
+      const transactionId = generateUniqueId();
+      onPayment(personIndex, minimumAmount, transactionId);
+      alert(`Payment of ${minimumAmount} processed with Transaction ID: ${transactionId}`);
+    } else {
+      alert('Minimum amount is not available.');
+    }
+  };
+
+  const handlePayUserDefined = () => {
+    if (userDefinedAmount !== null) {
+      const transactionId = generateUniqueId();
+      onPayment(personIndex, userDefinedAmount, transactionId);
+      alert(`Payment of ${userDefinedAmount} processed with Transaction ID: ${transactionId}`);
+    } else {
+      alert('User-defined amount is not available.');
+    }
   };
 
   return (
@@ -172,6 +208,15 @@ function LuggageCalculator({ weightsInput, onBack }) {
           <button onClick={handleCalculateWithRules} style={{ marginTop: '10px' }}>
             Calculate with Rules
           </button>
+          {/* Add Pay Buttons */}
+          <div style={{ marginTop: '20px' }}>
+            <button onClick={handlePayMinimum} disabled={minimumAmount === null}>
+              Pay Minimum
+            </button>
+            <button onClick={handlePayUserDefined} disabled={userDefinedAmount === null}>
+              Pay User Defined
+            </button>
+          </div>
         </div>
       )}
       {result && (

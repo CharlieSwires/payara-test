@@ -1,21 +1,21 @@
 // src/WeightsInputScreen.js
 import React from 'react';
 
-function WeightsInputScreen({ weightsList, onWeightsChange, onWeightsSubmit }) {
-  const handleSubmit = (personWeights) => {
-    onWeightsSubmit(personWeights);
+function WeightsInputScreen({ peopleList, onWeightsChange, onWeightsSubmit }) {
+  const handleSubmit = (personIndex) => {
+    onWeightsSubmit(personIndex);
   };
 
   return (
     <div>
       <h1>Enter Weights for Each Person</h1>
-      {weightsList.map((personWeights, personIndex) => (
+      {peopleList.map((person, personIndex) => (
         <div
           key={personIndex}
           style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}
         >
           <span style={{ marginRight: '10px' }}>Person {personIndex + 1}:</span>
-          {personWeights.map((weight, weightIndex) => (
+          {person.weights.map((weight, weightIndex) => (
             <input
               key={weightIndex}
               type="number"
@@ -27,11 +27,27 @@ function WeightsInputScreen({ weightsList, onWeightsChange, onWeightsSubmit }) {
             />
           ))}
           <button
-            onClick={() => handleSubmit(weightsList[personIndex])}
+            onClick={() => handleSubmit(personIndex)}
             style={{ marginLeft: '10px' }}
           >
             Submit
           </button>
+          {/* Display Amount Paid */}
+          <input
+            type="text"
+            value={person.amountPaid}
+            readOnly
+            placeholder="Amount Paid"
+            style={{ marginLeft: '10px', width: '100px' }}
+          />
+          {/* Display Transaction ID */}
+          <input
+            type="text"
+            value={person.transactionId}
+            readOnly
+            placeholder="Transaction ID"
+            style={{ marginLeft: '10px', width: '200px' }}
+          />
         </div>
       ))}
     </div>

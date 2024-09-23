@@ -49,14 +49,14 @@ public class LuggageCalculator {
 	
 	@PostMapping(path = "/min-cost", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<List<Touple>> minCost( @RequestBody RequestBean input) {
-		log.info(input.toString());
+		log.debug(input.toString());
 		List<Touple> result = cmp.calculateMinimumPrice(input.getWeights());
 		return new ResponseEntity<List<Touple>>(result, HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/cost", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Double> cost( @RequestBody RequestBeanWithNames input) {
-		log.info(input.toString());
+		log.debug(input.toString());
 		Double result;
 		synchronized (cmp) {
 			wtcc.reset();

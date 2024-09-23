@@ -7,20 +7,26 @@ import './App.css';
 function App() {
   const [currentScreen, setCurrentScreen] = useState('input'); // 'input' or 'calculator'
   const [selectedWeights, setSelectedWeights] = useState([]);  // Weights selected from Screen 1
-  const [weightsList, setWeightsList] = useState(
-    Array(5).fill().map(() => Array(5).fill(0))
-  ); // Weights for all people
+  const [selectedPersonIndex, setSelectedPersonIndex] = useState(null); // Index of selected person
+  const [peopleList, setPeopleList] = useState(
+    Array(5).fill().map(() => ({
+      weights: Array(5).fill(0),
+      amountPaid: '',
+      transactionId: ''
+    }))
+  ); // Data for all people
 
   const handleWeightsChange = (personIndex, weightIndex, value) => {
-    const newWeightsList = [...weightsList];
-    newWeightsList[personIndex][weightIndex] = value;
-    setWeightsList(newWeightsList);
+    const newPeopleList = [...peopleList];
+    newPeopleList[personIndex].weights[weightIndex] = value;
+    setPeopleList(newPeopleList);
   };
 
-  const handleWeightsSubmit = (personWeights) => {
+  const handleWeightsSubmit = (personIndex) => {
     // Convert weights to numbers
-    const parsedWeights = personWeights.map((w) => parseFloat(w) || 0);
+    const parsedWeights = peopleList[personIndex].weights.map((w) => parseFloat(w) || 0);
     setSelectedWeights(parsedWeights);
+    setSelectedPersonIndex(personIndex);
     setCurrentScreen('calculator');
   };
 
@@ -28,18 +34,27 @@ function App() {
     setCurrentScreen('input');
   };
 
+  const handlePayment = (personIndex, amount, transactionId) => {
+    const newPeopleList = [...peopleList];
+    newPeopleList[personIndex].amountPaid = amount;
+    newPeopleList[personIndex].transactionId = transactionId;
+    setPeopleList(newPeopleList);
+  };
+
   return (
     <div className="App">
       {currentScreen === 'input' ? (
         <WeightsInputScreen
-          weightsList={weightsList}
+          peopleList={peopleList}
           onWeightsChange={handleWeightsChange}
           onWeightsSubmit={handleWeightsSubmit}
         />
       ) : (
         <LuggageCalculator
           weightsInput={selectedWeights}
+          personIndex={selectedPersonIndex}
           onBack={handleBackToInput}
+          onPayment={handlePayment}
         />
       )}
     </div>
