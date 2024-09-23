@@ -1,7 +1,6 @@
 package com.charlie.payara_test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,29 +43,34 @@ public class WeightsToCostConversion {
 		}
 	}
 
+	public class ReturnValues {
+		public ReturnValues(Double price, List<String> selected) {
+			super();
+			this.price = price;
+			this.selected = selected;
+		}
+		public Double price;
+		public List<String> selected;
+	}
+	
 	public static HashMap<String,Integer> singles = new HashMap<String,Integer>();
-	public static List<String> selected = new ArrayList<>();
 	public WeightsToCostConversion() {
 		singles = new HashMap<String,Integer>();
 		for(RuleNames item : RuleNames.values()) {
 			singles.put(item.name(),item.getMany());
 		}
-		selected = new ArrayList<>();
 	}
 
-	public void clear() {
+	public void reset() {
 		singles = new HashMap<String,Integer>();
 		for(RuleNames item : RuleNames.values()) {
 			singles.put(item.name(),item.getMany());
 		}
-		selected = new ArrayList<>();
 	}
 
-	public List<String> getSelected(){
-		return selected;
-	}
-	public Double processArrayOfWeights(Double[] weights) {
+	public ReturnValues processArrayOfWeights(Double[] weights) {
 		Double sum = 0.0;
+		List<String> selected = new ArrayList<>();
 		for(int i = 0; i < weights.length; i++) {
 			boolean contin = false;
 			for(RuleNames item : RuleNames.values()) {
@@ -127,7 +131,8 @@ public class WeightsToCostConversion {
 				}
 			}
 		}
-		return sum;
+		ReturnValues result = new ReturnValues(sum, selected);
+		return result;
 	}
 
 	public Double processArrayOfWeightsGivenNames(Double[] weights, String[] names) {
@@ -150,10 +155,10 @@ public class WeightsToCostConversion {
 						singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
 						continue;
 					} else {
-						throw new RuntimeException(name + "- not in the correct range!!");
+						throw new RuntimeException(name + " - not in the correct range!!");
 					}
 				} else {
-					throw new RuntimeException(name + "- can't be used more than once!!");
+					throw new RuntimeException(name + " - can't be used more than once!!");
 				}
 			case "FREE_UNDER_25KG_OVERWEIGHT":
 				int timesLeft2 = singles.get("FREE_UNDER_25KG_OVERWEIGHT");
@@ -167,10 +172,10 @@ public class WeightsToCostConversion {
 						singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft2);
 						continue;
 					} else {
-						throw new RuntimeException(name + "- not in the correct range!!");
+						throw new RuntimeException(name + " - not in the correct range!!");
 					}
 				} else {
-					throw new RuntimeException(name + "- can't be used more than once!!");
+					throw new RuntimeException(name + " - can't be used more than once!!");
 				}
 			case "FEE_UNDER_7KG":
 				if (singles.get("FEE_UNDER_7KG") == USED_MANY)
@@ -178,7 +183,7 @@ public class WeightsToCostConversion {
 						sum += item.getPrice();
 						continue;
 					} else {
-						throw new RuntimeException(name + "- not in the right range 0-7kg!!");
+						throw new RuntimeException(name + " - not in the right range 0-7kg!!");
 					}
 				break;
 			case "FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT":
@@ -191,11 +196,11 @@ public class WeightsToCostConversion {
 						sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weights[i] - item.getUnder());
 						continue;
 					} else {
-						throw new RuntimeException(name + "- not in the right range 7-?kg!!");
+						throw new RuntimeException(name + " - not in the right range 7-?kg!!");
 					}
 				break;
 			case "OVERWEIGHT":
-				throw new IllegalArgumentException(name+ "- can't use this!!");
+				throw new IllegalArgumentException(name+ " - can't use this!!");
 			default:
 				throw new RuntimeException("Not Implemented");
 			}

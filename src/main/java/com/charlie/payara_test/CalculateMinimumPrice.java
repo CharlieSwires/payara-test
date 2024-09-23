@@ -3,8 +3,9 @@ package com.charlie.payara_test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.charlie.payara_test.WeightsToCostConversion.ReturnValues;
 
 @Service
 public class CalculateMinimumPrice {
@@ -32,17 +33,15 @@ public class CalculateMinimumPrice {
 	
 	public List<Touple> calculateMinimumPrice(Double[] weights){
 		List<Touple> result = new ArrayList<>();
-		wp.clear();
-		wp.generatePermutations(weights, 0);
-		List<Double[]> output = wp.getList();
+		List<Double[]> output = wp.generatePermutationsCaller(weights, 0);
 
 		List<Double> listOfCosts = new ArrayList<>();
 		List<List<String>> listOfSelected = new ArrayList<>();
 		for(Double[] item : output) {
-			wtcc.clear();
-			Double cost = wtcc.processArrayOfWeights(item);
-			listOfCosts.add(cost);
-			listOfSelected.add(wtcc.getSelected());
+			wtcc.reset();
+			ReturnValues result2 = wtcc.processArrayOfWeights(item);
+			listOfCosts.add(result2.price);
+			listOfSelected.add(result2.selected);
 		}
 		
 		Double minCost = listOfCosts.get(0);
