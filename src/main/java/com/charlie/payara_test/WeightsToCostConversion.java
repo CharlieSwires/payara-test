@@ -78,41 +78,49 @@ public class WeightsToCostConversion {
 
 				switch(item.name()) {
 				case "FREE_UNDER_7KG_OVERWEIGHT":
-					if (singles.get("FREE_UNDER_7KG_OVERWEIGHT") > 0)
+					int timesLeft = singles.get("FREE_UNDER_7KG_OVERWEIGHT");
+
+					if (timesLeft > 0) {
 						if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
-							singles.put("FREE_UNDER_7KG_OVERWEIGHT", singles.get("FREE_UNDER_7KG_OVERWEIGHT") - 1);
+							singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
 							selected.add(item.name());
 							contin = true;
 						} else if (weights[i] > item.getUnder()) {
 							sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weights[i] - item.getUnder());
-							singles.put("FREE_UNDER_7KG_OVERWEIGHT", singles.get("FREE_UNDER_7KG_OVERWEIGHT") - 1);
+							singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
 							selected.add(item.name());
 							contin = true;
 						}
+					}
 					break;
 				case "FREE_UNDER_25KG_OVERWEIGHT":
-					if (singles.get("FREE_UNDER_25KG_OVERWEIGHT")  > 0)
+					timesLeft = singles.get("FREE_UNDER_25KG_OVERWEIGHT");
+					if (timesLeft  > 0) {
 						if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
-							singles.put("FREE_UNDER_25KG_OVERWEIGHT", singles.get("FREE_UNDER_25KG_OVERWEIGHT") - 1);
+							singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft);
 							selected.add(item.name());
 							contin = true;
 						} else if (weights[i] > item.getUnder()) {
 							sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weights[i] - item.getUnder());
-							singles.put("FREE_UNDER_25KG_OVERWEIGHT", singles.get("FREE_UNDER_25KG_OVERWEIGHT") - 1);
+							singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft);
 							selected.add(item.name());
 							contin = true;
 						}
+					}
 					break;
 				case "FEE_UNDER_7KG":
-					if (singles.get("FEE_UNDER_7KG") == USED_MANY)
+					if (singles.get("FEE_UNDER_7KG") == USED_MANY) {
 						if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
 							sum += item.getPrice();
 							selected.add(item.name());
 							contin = true;
 						} 
+					} else {
+						throw new RuntimeException(item.name() + " - expected USED_MANY!!");
+					}
 					break;
 				case "FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT":
-					if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY)
+					if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY) {
 						if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
 							sum += item.getPrice();
 							selected.add(item.name());
@@ -123,6 +131,9 @@ public class WeightsToCostConversion {
 							selected.add(item.name());
 							contin = true;
 						}
+					} else {
+						throw new RuntimeException(item.name() + " - expected USED_MANY!!");
+					}
 					break;
 				case "OVERWEIGHT":
 					break;
@@ -178,16 +189,18 @@ public class WeightsToCostConversion {
 					throw new RuntimeException(name + " - can't be used more than once!!");
 				}
 			case "FEE_UNDER_7KG":
-				if (singles.get("FEE_UNDER_7KG") == USED_MANY)
+				if (singles.get("FEE_UNDER_7KG") == USED_MANY) {
 					if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
 						sum += item.getPrice();
 						continue;
 					} else {
 						throw new RuntimeException(name + " - not in the right range 0-7kg!!");
 					}
-				break;
+				} else {
+					throw new RuntimeException(name + " - expected USED_MANY!!");
+				}
 			case "FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT":
-				if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY)
+				if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY) {
 					if (weights[i] > item.getOver() && weights[i] < item.getUnder()) {
 						sum += item.getPrice();
 						continue;
@@ -198,7 +211,9 @@ public class WeightsToCostConversion {
 					} else {
 						throw new RuntimeException(name + " - not in the right range 7-?kg!!");
 					}
-				break;
+				} else {
+					throw new RuntimeException(name + " - expected USED_MANY!!");
+				}
 			case "OVERWEIGHT":
 				throw new IllegalArgumentException(name+ " - can't use this!!");
 			default:

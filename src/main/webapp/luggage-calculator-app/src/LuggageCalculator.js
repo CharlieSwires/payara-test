@@ -57,7 +57,7 @@ function LuggageCalculator() {
       })
       .catch(err => {
         console.error('Fetch error:', err);
-        setError(err);
+        setError(err.message);
         setLoading(false);
       });
   };
