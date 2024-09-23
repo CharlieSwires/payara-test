@@ -189,7 +189,7 @@ function LuggageCalculator() {
       )}
       {result && (
         <div style={{ marginTop: '20px' }}>
-          <h2>Result</h2>
+          <h2>Calculate with Rules Result</h2>
           <div>{result}</div>
         </div>
       )}
