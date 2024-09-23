@@ -31,7 +31,7 @@ public class CalculateMinimumPrice {
 		}
 	}
 	
-	public List<Touple> calculateMinimumPrice(Double[] weights){
+	public synchronized List<Touple> calculateMinimumPrice(Double[] weights){
 		List<Touple> result = new ArrayList<>();
 		List<Double[]> output = wp.generatePermutationsCaller(weights, 0);
 
