@@ -1,8 +1,7 @@
 // src/LuggageCalculator.js
 import React, { useState, useEffect } from 'react';
 
-function LuggageCalculator() {
-  const [weightsInput, setWeightsInput] = useState([35.0, 10.0, 11.0, 4.0, 1.0]);
+function LuggageCalculator({ weightsInput, onBack }) {
   const [data, setData] = useState([]);
   const [rules, setRules] = useState([]);
   const [loading, setLoading] = useState(false); 
@@ -26,6 +25,11 @@ function LuggageCalculator() {
         setError(err);
       });
   }, []);
+
+  useEffect(() => {
+    handleSubmit(); // Automatically submit when weightsInput changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weightsInput]);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -60,12 +64,6 @@ function LuggageCalculator() {
         setError(err.message);
         setLoading(false);
       });
-  };
-
-  const handleWeightChange = (index, value) => {
-    const newWeights = [...weightsInput];
-    newWeights[index] = value;
-    setWeightsInput(newWeights);
   };
 
   const handleRuleChange = (index, value) => {
@@ -129,18 +127,7 @@ function LuggageCalculator() {
   return (
     <div>
       <h1>Luggage Calculator</h1>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-        {weightsInput.map((weight, index) => (
-          <input
-            key={index}
-            type="number"
-            value={weight}
-            onChange={(e) => handleWeightChange(index, e.target.value)}
-            style={{ marginRight: '5px', width: '60px' }}
-          />
-        ))}
-        <button onClick={handleSubmit}>Calculate</button>
-      </div>
+      <button onClick={onBack} style={{ marginBottom: '20px' }}>Back to Input</button>
       {loading && <div>Loading...</div>}
       {error && <div style={{ color: 'red' }}>Error: {error.message}</div>}
       {data.length > 0 && (
