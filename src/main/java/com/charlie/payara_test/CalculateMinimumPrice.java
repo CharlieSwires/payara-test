@@ -19,15 +19,15 @@ public class CalculateMinimumPrice {
 	}
 	
 	public class Touple {
-		public String first;
-		public String second;
+		public String amount;
+		public String enumeration;
 		public Touple(String first, String second) {
-			this.first = first;
-			this.second = second;
+			this.amount = first;
+			this.enumeration = second;
 		}
 		@Override
 		public String toString() {
-			return "Touple [first=" + first + ", second=" + second + "]";
+			return "Touple [amount=" + amount + ", enumeration=" + enumeration + "]";
 		}
 	}
 	

@@ -128,12 +128,12 @@ public class AppTest {
 		Double[] weights = {35.0, 10.0, 11.0, 4.0, 1.0};
 		List<Touple> result = cmp.calculateMinimumPrice(weights);
 //		System.out.println(Arrays.toString(result.toArray()));
-		assertTrue(("[Touple [first=110.0, second=Cost], "
-				+ "Touple [first=10.0, second=FREE_UNDER_7KG_OVERWEIGHT], "
-				+ "Touple [first=35.0, second=FREE_UNDER_25KG_OVERWEIGHT], "
-				+ "Touple [first=11.0, second=FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT], "
-				+ "Touple [first=4.0, second=FEE_UNDER_7KG], "
-				+ "Touple [first=1.0, second=FEE_UNDER_7KG]]"
+		assertTrue(("[Touple [amount=110.0, enumeration=Cost], "
+				+ "Touple [amount=10.0, enumeration=FREE_UNDER_7KG_OVERWEIGHT], "
+				+ "Touple [amount=35.0, enumeration=FREE_UNDER_25KG_OVERWEIGHT], "
+				+ "Touple [amount=11.0, enumeration=FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT], "
+				+ "Touple [amount=4.0, enumeration=FEE_UNDER_7KG], "
+				+ "Touple [amount=1.0, enumeration=FEE_UNDER_7KG]]"
 				).equals(Arrays.toString(result.toArray())));
 	}
 	@Test
