@@ -1,6 +1,7 @@
 com\charlie\payara_test\CalculateMinimumPrice$Touple.class
 com\charlie\payara_test\WeightsToCostConversion.class
 com\charlie\payara_test\App.class
+com\charlie\payara_test\GlobalExceptionHandler.class
 com\charlie\payara_test\WeightsToCostConversion$ReturnValues.class
 com\charlie\payara_test\CalculateMinimumPrice.class
 com\charlie\payara_test\WeightPermutations.class
