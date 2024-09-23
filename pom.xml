@@ -6,6 +6,7 @@
   <groupId>com.charlie</groupId>
   <artifactId>payara-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <name>payara-test</name>
   <!-- FIXME change it to the project's website -->
@@ -41,7 +42,18 @@
     <version>5.0.0</version>
     <scope>provided</scope>
 </dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.16.0</version>
+</dependency>
 
+<!-- Jackson Databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.16.0</version>
+</dependency>
 <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-api</artifactId>
@@ -59,11 +71,11 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
   <build>
     <finalName>${project.artifactId}</finalName>
-   <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
@@ -116,11 +128,10 @@
                 </execution>
             </executions>
             <configuration>
-                <mainClass>rest.MainApp</mainClass>
+                <mainClass>com.charlie.payara_test.App</mainClass>
             </configuration>
         </plugin>
     </plugins>
-        </pluginManagement>
 
 </build>
 </project>

@@ -1,5 +1,7 @@
 package com.charlie.payara_test;
 
+import java.util.Arrays;
+
 public class RequestBean {
 
 	private Double[] weights;
@@ -13,6 +15,11 @@ public class RequestBean {
 
 	public void setWeights(Double[] weights) {
 		this.weights = weights;
+	}
+
+	@Override
+	public String toString() {
+		return "RequestBean [weights=" + Arrays.toString(weights) + "]";
 	}
 
 	

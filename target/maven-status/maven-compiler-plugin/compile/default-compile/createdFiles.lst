@@ -1,2 +1,10 @@
-com\charlie\payara_test\WeightPermutations.class
+com\charlie\payara_test\CalculateMinimumPrice$Touple.class
+com\charlie\payara_test\WeightsToCostConversion.class
 com\charlie\payara_test\App.class
+com\charlie\payara_test\WeightsToCostConversion$ReturnValues.class
+com\charlie\payara_test\CalculateMinimumPrice.class
+com\charlie\payara_test\WeightPermutations.class
+com\charlie\payara_test\RequestBean.class
+com\charlie\payara_test\LuggageCalculator.class
+com\charlie\payara_test\RequestBeanWithNames.class
+com\charlie\payara_test\WeightsToCostConversion$RuleNames.class
