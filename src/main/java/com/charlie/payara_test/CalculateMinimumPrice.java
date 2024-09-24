@@ -34,15 +34,14 @@ public class CalculateMinimumPrice {
 	public List<Touple> calculateMinimumPrice(Double[] weights){
 		List<Touple> result = new ArrayList<>();
 		List<Double[]> output;
-		synchronized(wp) {
+		List<Double> listOfCosts = null;
+		List<List<String>> listOfSelected = null;
+		synchronized (wtcc) {
 			output = wp.generatePermutationsCaller(weights, 0);
-		}
-		List<Double> listOfCosts = new ArrayList<>();
-		List<List<String>> listOfSelected = new ArrayList<>();
-		for(Double[] item : output) {
-			synchronized(wp) {
-				wtcc.reset();
-				ReturnValues result2 = wtcc.processArrayOfWeights(item);
+			listOfCosts = new ArrayList<>();
+			listOfSelected = new ArrayList<>();
+			for(Double[] item : output) {
+				ReturnValues result2 = wtcc.processArrayOfWeightsCaller(item);
 				listOfCosts.add(result2.price);
 				listOfSelected.add(result2.selected);
 			}

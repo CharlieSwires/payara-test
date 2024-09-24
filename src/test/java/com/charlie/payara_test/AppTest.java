@@ -2,8 +2,6 @@ package com.charlie.payara_test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -81,16 +79,19 @@ public class AppTest {
 	public void calculateCost() {
 		// Given array of 5 weights in kilograms
 		Double[] weights = {35.0, 10.0, 11.0, 4.0, 1.0};
+		List<Double> listOfCosts = null;
+		List<List<String>> listOfSelected = null;
 		// Generate and print all permutations
-		List<Double[]> output = wp.generatePermutationsCaller(weights, 0);
-
-		List<Double> listOfCosts = new ArrayList<>();
-		List<List<String>> listOfSelected = new ArrayList<>();
-		for(Double[] item : output) {
-			ReturnValues result = wtcc.processArrayOfWeights(item);
-			listOfCosts.add(result.price);
-			listOfSelected.add(result.selected);
-			wtcc.reset();
+		List<Double[]> output = null;
+		synchronized (wtcc) {
+			output = wp.generatePermutationsCaller(weights, 0);
+			listOfCosts = new ArrayList<>();
+			listOfSelected = new ArrayList<>();
+			for(Double[] item : output) {
+				ReturnValues result = wtcc.processArrayOfWeightsCaller(item);
+				listOfCosts.add(result.price);
+				listOfSelected.add(result.selected);
+			}
 		}
 //		try (BufferedWriter writer = new BufferedWriter(new FileWriter("costs.txt"))) {
 //			// Generate and write all permutations
@@ -145,8 +146,7 @@ public class AppTest {
 				"FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT",
 				"FEE_UNDER_7KG",
 		"FEE_UNDER_7KG"};
-		wtcc.reset();
-		Double result = wtcc.processArrayOfWeightsGivenNames(weights, names);
+		Double result = wtcc.processArrayOfWeightsGivenNamesCaller(weights, names);
 //		System.out.println("Result="+result.toString());
 		assertTrue("110.0".equals(result.toString()));
 
@@ -161,8 +161,7 @@ public class AppTest {
 				"FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT",
 				"FEE_UNDER_7KG",
 		"FEE_UNDER_7KG"};
-		wtcc.reset();
-		Double result = wtcc.processArrayOfWeightsGivenNames(weights, names);
+		Double result = wtcc.processArrayOfWeightsGivenNamesCaller(weights, names);
 //		System.out.println("Result="+result.toString());
 		assertTrue("185.0".equals(result.toString()));
 
@@ -176,9 +175,8 @@ public class AppTest {
 				"FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT",
 				"FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT",
 		"FEE_UNDER_7KG"};
-		wtcc.reset();
 		try {
-			Double result = wtcc.processArrayOfWeightsGivenNames(weights, names);
+			Double result = wtcc.processArrayOfWeightsGivenNamesCaller(weights, names);
 		} catch (RuntimeException e) {
 			assertTrue("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT - not in the right range 7-?kg!!".equals(e.getMessage()));
 		}

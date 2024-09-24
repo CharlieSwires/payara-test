@@ -54,7 +54,7 @@ public class WeightsToCostConversion {
 		public List<String> selected;
 	}
 	
-	public static HashMap<String,Integer> singles = new HashMap<String,Integer>();
+	public HashMap<String,Integer> singles = new HashMap<String,Integer>();
 	public WeightsToCostConversion() {
 		singles = new HashMap<String,Integer>();
 		for(RuleNames item : RuleNames.values()) {
@@ -62,14 +62,14 @@ public class WeightsToCostConversion {
 		}
 	}
 
-	public void reset() {
+	private void reset() {
 		singles = new HashMap<String,Integer>();
 		for(RuleNames item : RuleNames.values()) {
 			singles.put(item.name(),item.getMany());
 		}
 	}
 
-	public ReturnValues processArrayOfWeights(Double[] weights) {
+	public ReturnValues processArrayOfWeights(Double[] weights, HashMap<String,Integer> singles) {
 		Double sum = 0.0;
 		List<String> selected = new ArrayList<>();
 		for(int i = 0; i < weights.length; i++) {
@@ -159,7 +159,7 @@ public class WeightsToCostConversion {
 		return result;
 	}
 
-	public Double processArrayOfWeightsGivenNames(Double[] weights, String[] names) {
+	public Double processArrayOfWeightsGivenNames(Double[] weights, String[] names, HashMap<String,Integer> singles) {
 		Double sum = 0.0;
 		for(int i = 0; i < weights.length; i++) {
 			String name = names[i];
@@ -246,4 +246,15 @@ public class WeightsToCostConversion {
 
 		return sum;
 	}
+	
+	public Double processArrayOfWeightsGivenNamesCaller(Double[] weights, String[] names) {
+		reset();
+		return processArrayOfWeightsGivenNames(weights, names, singles);
+	}
+	
+	public ReturnValues processArrayOfWeightsCaller(Double[] weights) {
+		reset();
+		return processArrayOfWeights(weights, singles);
+	}
+
 }

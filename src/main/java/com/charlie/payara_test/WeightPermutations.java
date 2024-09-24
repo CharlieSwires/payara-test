@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class WeightPermutations {
 
-	private static List<Double[]> listOfArraysOfWeights = null;
+	private List<Double[]> listOfArraysOfWeights = null;
 	
 	public WeightPermutations() {
 		listOfArraysOfWeights = new ArrayList<Double[]>();
 	}
     // Recursive method to generate permutations
-    private void generatePermutations(Double[] arr, int start) {
+    private void generatePermutations(Double[] arr, int start, List<Double[]> listOfArraysOfWeights) {
         if (start == arr.length - 1) {
             listOfArraysOfWeights.add(arr.clone());
             return;
@@ -22,7 +22,7 @@ public class WeightPermutations {
             // Swap the current element with the start element
             swap(arr, i, start);
             // Recursively generate permutations for the remaining elements
-            generatePermutations(arr, start + 1);
+            generatePermutations(arr, start + 1, listOfArraysOfWeights);
             // Backtrack by swapping the elements back to their original positions
             swap(arr, i, start);
         }
@@ -41,7 +41,7 @@ public class WeightPermutations {
     }
 	public List<Double[]> generatePermutationsCaller(Double[] weights, int start) {
 		clear();
-		generatePermutations(weights, start);
+		generatePermutations(weights, start, listOfArraysOfWeights);
 		return listOfArraysOfWeights;
 	}
 }

@@ -58,10 +58,7 @@ public class LuggageCalculator {
 	public ResponseEntity<Double> cost( @RequestBody RequestBeanWithNames input) {
 		log.debug(input.toString());
 		Double result;
-		synchronized (cmp) {
-			wtcc.reset();
-			result = wtcc.processArrayOfWeightsGivenNames(input.getWeights(), input.getNames());
-		}
+		result = wtcc.processArrayOfWeightsGivenNamesCaller(input.getWeights(), input.getNames());
 		return new ResponseEntity<Double>(result, HttpStatus.OK);
 	}
 
