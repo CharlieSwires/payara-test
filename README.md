@@ -1,5 +1,18 @@
 Luggage Calculator
 ------------------
+
+Install
+-------
+
+<p><b> Install Node.js and npm (if not already installed)</b></p>
+<p><b> Download from https://nodejs.org/</b></p>
+
+<p><b> Install Bootstrap 3</b></p>
+
+<p>npm install bootstrap@3</p>
+
+<p><b> Install Git, Maven and JDK17</b></p>
+
 <p>in git bash</p>
 <p>git clone https://github.com/CharlieSwires/payara-test</p>
 <p>This contains both the java and React</p>
@@ -7,17 +20,14 @@ Luggage Calculator
 Install
 -------
 
-# Install Node.js and npm (if not already installed)
-# Download from https://nodejs.org/
+<p><b> Install Node.js and npm (if not already installed)</b></p>
+<p><b> Download from https://nodejs.org/</b></p>
 
-# Create a new React application
-
-<p>npx create-react-app luggage-calculator-app</p>
-<p>cd luggage-calculator-app</p>
-
-# Install Bootstrap 3
+<p><b> Install Bootstrap 3</b></p>
 
 <p>npm install bootstrap@3</p>
+
+<p><b> Install Git, Maven and JDK17</b></p>
 
 build
 -----
