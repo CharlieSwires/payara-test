@@ -17,6 +17,7 @@ function App() {
   ); // Data for all people
 
   const [checkInBoothId, setCheckInBoothId] = useState(''); // New state for check-in booth ID
+  const [error, setError] = useState(null); // Error state if needed
 
   const handleWeightsChange = (personIndex, weightIndex, value) => {
     const newPeopleList = [...peopleList];
@@ -45,11 +46,14 @@ function App() {
 
   // New handler for check-in booth ID change
   const handleCheckInBoothIdChange = (value) => {
-    setCheckInBoothId(value);
+    // Allow only digits and limit to 10 characters
+    const sanitizedValue = value.replace(/\D/g, '').slice(0, 10);
+    setCheckInBoothId(sanitizedValue);
   };
 
   return (
     <div className="App">
+      {error && <div style={{ color: 'red' }}>Error: {error.message}</div>}
       {currentScreen === 'input' ? (
         <WeightsInputScreen
           peopleList={peopleList}

@@ -78,7 +78,7 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, check
       })
       .catch((err) => {
         console.error('Fetch error:', err);
-        setError(err.message);
+        setError(err);
         setLoading(false);
       });
   };
@@ -196,7 +196,7 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, check
       )}
       {error && (
         <div className="alert alert-danger">
-          <strong>Error:</strong> {error}
+          <strong>Error:</strong> {error.message}
         </div>
       )}
 
