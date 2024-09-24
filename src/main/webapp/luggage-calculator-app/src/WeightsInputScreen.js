@@ -1,14 +1,32 @@
 // src/WeightsInputScreen.js
 import React from 'react';
 
-function WeightsInputScreen({ peopleList, onWeightsChange, onWeightsSubmit }) {
+function WeightsInputScreen({ peopleList, onWeightsChange, onWeightsSubmit, checkInBoothId, onCheckInBoothIdChange }) {
   const handleSubmit = (personIndex) => {
     onWeightsSubmit(personIndex);
   };
 
   return (
     <div className="container">
-      <h1 className="text-center">Enter Weights for Each Person</h1>
+      <div className="row" style={{ alignItems: 'center', marginBottom: '20px' }}>
+        <div className="col-sm-6">
+          <h1>Enter Weights for Each Person</h1>
+        </div>
+        <div className="col-sm-6 text-right">
+          <div className="form-inline">
+            <label htmlFor="checkInBoothId" style={{ marginRight: '10px' }}>Check-in Booth ID:</label>
+            <input
+              type="text"
+              id="checkInBoothId"
+              className="form-control"
+              value={checkInBoothId}
+              onChange={(e) => onCheckInBoothIdChange(e.target.value)}
+              placeholder="10-digit ID"
+              maxLength="10"
+            />
+          </div>
+        </div>
+      </div>
       {peopleList.map((person, personIndex) => (
         <div
           key={personIndex}

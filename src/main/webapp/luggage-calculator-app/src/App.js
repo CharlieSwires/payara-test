@@ -16,6 +16,8 @@ function App() {
     }))
   ); // Data for all people
 
+  const [checkInBoothId, setCheckInBoothId] = useState(''); // New state for check-in booth ID
+
   const handleWeightsChange = (personIndex, weightIndex, value) => {
     const newPeopleList = [...peopleList];
     newPeopleList[personIndex].weights[weightIndex] = value;
@@ -41,6 +43,11 @@ function App() {
     setPeopleList(newPeopleList);
   };
 
+  // New handler for check-in booth ID change
+  const handleCheckInBoothIdChange = (value) => {
+    setCheckInBoothId(value);
+  };
+
   return (
     <div className="App">
       {currentScreen === 'input' ? (
@@ -48,6 +55,8 @@ function App() {
           peopleList={peopleList}
           onWeightsChange={handleWeightsChange}
           onWeightsSubmit={handleWeightsSubmit}
+          checkInBoothId={checkInBoothId}
+          onCheckInBoothIdChange={handleCheckInBoothIdChange}
         />
       ) : (
         <LuggageCalculator
@@ -55,6 +64,7 @@ function App() {
           personIndex={selectedPersonIndex}
           onBack={handleBackToInput}
           onPayment={handlePayment}
+          checkInBoothId={checkInBoothId}
         />
       )}
     </div>

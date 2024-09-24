@@ -1,12 +1,12 @@
 // src/LuggageCalculator.js
 import React, { useState, useEffect } from 'react';
 
-function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
+function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, checkInBoothId }) {
   const [data, setData] = useState([]);
   const [rules, setRules] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [result, setResult] = useState(''); // For displaying the result from /cost endpoint
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(null);     
+  const [result, setResult] = useState('');     // For displaying the result from /cost endpoint
   const [minimumAmount, setMinimumAmount] = useState(null);
   const [userDefinedAmount, setUserDefinedAmount] = useState(null);
 
@@ -144,11 +144,16 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
       });
   };
 
-  // Function to generate a unique 20-digit transaction ID
+  // Function to generate a unique transaction ID and append the check-in booth ID
   function generateUniqueId() {
     const timestamp = Date.now().toString(); // Milliseconds since epoch
     const randomNum = Math.floor(Math.random() * 1e11).toString(); // Random number up to 1e11
-    return (timestamp + randomNum).slice(0, 20).padEnd(20, '0');
+    let transactionId = (timestamp + randomNum).slice(0, 20).padEnd(20, '0');
+    // Append check-in booth ID if provided
+    if (checkInBoothId) {
+      transactionId += `-${checkInBoothId}`;
+    }
+    return transactionId;
   }
 
   const handlePayMinimum = () => {
