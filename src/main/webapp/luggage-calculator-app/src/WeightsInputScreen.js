@@ -7,52 +7,61 @@ function WeightsInputScreen({ peopleList, onWeightsChange, onWeightsSubmit }) {
   };
 
   return (
-    <div>
-      <h1 style={{ textAlign: 'center' }}>Enter Weights for Each Person</h1>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-        {peopleList.map((person, personIndex) => (
-          <div
-            key={personIndex}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '120px repeat(5, 80px) 100px 120px 220px',
-              alignItems: 'center',
-              marginBottom: '10px',
-              gap: '10px',
-            }}
-          >
-            <span style={{ textAlign: 'right' }}>Person {personIndex + 1}:</span>
-            {person.weights.map((weight, weightIndex) => (
+    <div className="container">
+      <h1 className="text-center">Enter Weights for Each Person</h1>
+      {peopleList.map((person, personIndex) => (
+        <div
+          key={personIndex}
+          className="row"
+          style={{ marginBottom: '15px', alignItems: 'center' }}
+        >
+          <div className="col-sm-1 text-right">
+            <label style={{ marginTop: '7px' }}>Person {personIndex + 1}:</label>
+          </div>
+          {/* Weight Inputs */}
+          {person.weights.map((weight, weightIndex) => (
+            <div key={weightIndex} className="col-sm-1">
               <input
-                key={weightIndex}
                 type="number"
+                className="form-control"
                 value={weight}
                 onChange={(e) =>
                   onWeightsChange(personIndex, weightIndex, e.target.value)
                 }
-                style={{ width: '60px' }}
               />
-            ))}
-            <button onClick={() => handleSubmit(personIndex)}>Submit</button>
-            {/* Display Amount Paid */}
+            </div>
+          ))}
+          {/* Submit Button */}
+          <div className="col-sm-1">
+            <button
+              onClick={() => handleSubmit(personIndex)}
+              className="btn btn-primary"
+            >
+              Submit
+            </button>
+          </div>
+          {/* Amount Paid */}
+          <div className="col-sm-2">
             <input
               type="text"
+              className="form-control"
               value={person.amountPaid}
               readOnly
               placeholder="Amount Paid"
-              style={{ width: '100px' }}
             />
-            {/* Display Transaction ID */}
+          </div>
+          {/* Transaction ID */}
+          <div className="col-sm-3">
             <input
               type="text"
+              className="form-control"
               value={person.transactionId}
               readOnly
               placeholder="Transaction ID"
-              style={{ width: '200px' }}
             />
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }

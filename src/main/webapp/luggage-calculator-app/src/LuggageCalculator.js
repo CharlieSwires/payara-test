@@ -4,25 +4,27 @@ import React, { useState, useEffect } from 'react';
 function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
   const [data, setData] = useState([]);
   const [rules, setRules] = useState([]);
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(null);     
-  const [result, setResult] = useState('');     // For displaying the result from /cost endpoint
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [result, setResult] = useState(''); // For displaying the result from /cost endpoint
   const [minimumAmount, setMinimumAmount] = useState(null);
   const [userDefinedAmount, setUserDefinedAmount] = useState(null);
 
   // Fetch rules from the backend when the component mounts
   useEffect(() => {
     fetch('http://localhost:9999/payara/luggage-calculator/rules')
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error(`Failed to fetch rules: ${response.status} ${response.statusText}`);
+          throw new Error(
+            `Failed to fetch rules: ${response.status} ${response.statusText}`
+          );
         }
         return response.json();
       })
-      .then(rulesData => {
+      .then((rulesData) => {
         setRules(rulesData);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Error fetching rules:', err);
         setError(err);
       });
@@ -39,35 +41,42 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
     setResult(''); // Reset any previous result
 
     const requestData = {
-      weights: weightsInput.map(w => parseFloat(w) || 0) // Ensure values are numbers
+      weights: weightsInput.map((w) => parseFloat(w) || 0), // Ensure values are numbers
     };
 
     fetch('http://localhost:9999/payara/luggage-calculator/min-cost', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestData)
+      body: JSON.stringify(requestData),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+          throw new Error(
+            `Server error: ${response.status} ${response.statusText}`
+          );
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // Initialize selectedRule for each item
-        const dataWithRules = data.map(item => ({ ...item, selectedRule: '' }));
+        const dataWithRules = data.map((item) => ({
+          ...item,
+          selectedRule: '',
+        }));
         setData(dataWithRules);
 
         // Extract the 'Cost' amount
-        const costItem = dataWithRules.find(item => item.enumeration === 'Cost');
+        const costItem = dataWithRules.find(
+          (item) => item.enumeration === 'Cost'
+        );
         if (costItem) {
           setMinimumAmount(parseFloat(costItem.amount));
         }
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Fetch error:', err);
         setError(err.message);
         setLoading(false);
@@ -86,11 +95,11 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
     setResult(''); // Reset any previous result
 
     // Filter out the row where Enumeration is 'Cost'
-    const filteredData = data.filter(item => item.enumeration !== 'Cost');
+    const filteredData = data.filter((item) => item.enumeration !== 'Cost');
 
     // Map the weights and names
-    const weights = filteredData.map(item => parseFloat(item.amount) || 0);
-    const names = filteredData.map(item => item.selectedRule || '');
+    const weights = filteredData.map((item) => parseFloat(item.amount) || 0);
+    const names = filteredData.map((item) => item.selectedRule || '');
 
     // Check if any rule is not selected
     if (names.includes('')) {
@@ -101,31 +110,33 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
 
     const requestData = {
       weights: weights,
-      names: names
+      names: names,
     };
 
     fetch('http://localhost:9999/payara/luggage-calculator/cost', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestData)
+      body: JSON.stringify(requestData),
     })
-      .then(response => {
-        return response.text().then(text => {
+      .then((response) => {
+        return response.text().then((text) => {
           if (!response.ok) {
             // Throw an error with the response text
-            throw new Error(text || `Server error: ${response.status} ${response.statusText}`);
+            throw new Error(
+              text || `Server error: ${response.status} ${response.statusText}`
+            );
           }
           return text;
         });
       })
-      .then(resultData => {
+      .then((resultData) => {
         setResult(resultData);
         setUserDefinedAmount(parseFloat(resultData)); // Assuming resultData is a numeric string
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Fetch error:', err);
         // Set the result to the error message to display it in the Result section
         setResult(err.message);
@@ -144,7 +155,9 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
     if (minimumAmount !== null) {
       const transactionId = generateUniqueId();
       onPayment(personIndex, minimumAmount, transactionId);
-      alert(`Payment of ${minimumAmount} processed with Transaction ID: ${transactionId}`);
+      alert(
+        `Payment of ${minimumAmount} processed with Transaction ID: ${transactionId}`
+      );
     } else {
       alert('Minimum amount is not available.');
     }
@@ -154,22 +167,38 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
     if (userDefinedAmount !== null) {
       const transactionId = generateUniqueId();
       onPayment(personIndex, userDefinedAmount, transactionId);
-      alert(`Payment of ${userDefinedAmount} processed with Transaction ID: ${transactionId}`);
+      alert(
+        `Payment of ${userDefinedAmount} processed with Transaction ID: ${transactionId}`
+      );
     } else {
       alert('User-defined amount is not available.');
     }
   };
 
   return (
-    <div>
-      <h1>Luggage Calculator</h1>
-      <button onClick={onBack} style={{ marginBottom: '20px' }}>Back to Input</button>
-      {loading && <div>Loading...</div>}
-      {error && <div style={{ color: 'red' }}>Error: {error.message}</div>}
+    <div className="container">
+      <h1 className="text-center">Luggage Calculator</h1>
+      <div className="text-right" style={{ marginBottom: '20px' }}>
+        <button onClick={onBack} className="btn btn-default">
+          Back to Input
+        </button>
+      </div>
+
+      {loading && (
+        <div className="alert alert-info">
+          <strong>Loading...</strong>
+        </div>
+      )}
+      {error && (
+        <div className="alert alert-danger">
+          <strong>Error:</strong> {error}
+        </div>
+      )}
+
       {data.length > 0 && (
         <div>
-          <h2>Results</h2>
-          <table border="1" cellPadding="5" cellSpacing="0">
+          <h2 className="text-center">Results</h2>
+          <table className="table table-bordered table-striped">
             <thead>
               <tr>
                 <th>Amount</th>
@@ -188,10 +217,15 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
                         <select
                           value={item.selectedRule || ''}
                           onChange={(e) => handleRuleChange(index, e.target.value)}
+                          className="form-control"
                         >
-                          <option value="" disabled>Select Rule</option>
+                          <option value="" disabled>
+                            Select Rule
+                          </option>
                           {rules.map((rule, ruleIndex) => (
-                            <option key={ruleIndex} value={rule}>{rule}</option>
+                            <option key={ruleIndex} value={rule}>
+                              {rule}
+                            </option>
                           ))}
                         </select>
                       ) : (
@@ -205,24 +239,37 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment }) {
               ))}
             </tbody>
           </table>
-          <button onClick={handleCalculateWithRules} style={{ marginTop: '10px' }}>
-            Calculate with Rules
-          </button>
-          {/* Add Pay Buttons */}
-          <div style={{ marginTop: '20px' }}>
-            <button onClick={handlePayMinimum} disabled={minimumAmount === null}>
+          <div className="text-center" style={{ marginTop: '20px' }}>
+            <button
+              onClick={handleCalculateWithRules}
+              className="btn btn-success"
+              style={{ marginRight: '10px' }}
+            >
+              Calculate with Rules
+            </button>
+            {/* Add Pay Buttons */}
+            <button
+              onClick={handlePayMinimum}
+              className="btn btn-primary"
+              disabled={minimumAmount === null}
+              style={{ marginRight: '10px' }}
+            >
               Pay Minimum
             </button>
-            <button onClick={handlePayUserDefined} disabled={userDefinedAmount === null}>
+            <button
+              onClick={handlePayUserDefined}
+              className="btn btn-primary"
+              disabled={userDefinedAmount === null}
+            >
               Pay User Defined
             </button>
           </div>
         </div>
       )}
       {result && (
-        <div style={{ marginTop: '20px' }}>
+        <div className="well" style={{ marginTop: '20px' }}>
           <h2>Calculate with Rules Result</h2>
-          <div>{result}</div>
+          <p>{result}</p>
         </div>
       )}
     </div>
