@@ -17,18 +17,6 @@ Install
 <p>git clone https://github.com/CharlieSwires/payara-test</p>
 <p>This contains both the java and React</p>
 
-Install
--------
-
-<p><b> Install Node.js and npm (if not already installed)</b></p>
-<p><b> Download from https://nodejs.org/</b></p>
-
-<p><b> Install Bootstrap 3</b></p>
-
-<p>npm install bootstrap@3</p>
-
-<p><b> Install Git, Maven and JDK17</b></p>
-
 build
 -----
 <p>git bash 1</p>
