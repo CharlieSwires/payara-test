@@ -1,3 +1,5 @@
 target
 node/node_modules
 src/main/webapp/luggage-calculator-app/node_modules
+src/main/webapp/luggage-calculator-app/node
+node/node.exe
