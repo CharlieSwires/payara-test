@@ -50,3 +50,4 @@ people with their weights. Next to the weights would be a submit button which wo
 take you to the screen I've done. A random number would be  generated for the passenger and all their luggage which could be used on a luggage label once the luggage has been paid for.
 This random number if this app was running in many places would need a unique ID for the 
 check-in desk adding to it to make th Label ID truly unique.</p>
+<p>I haven't Dockerised it, if I were to do that jar -> war and use a tomcat container. </p>
