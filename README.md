@@ -4,34 +4,18 @@ Luggage Calculator
 Install
 -------
 
-<p><b> Install Node.js and npm (if not already installed)</b></p>
-<p><b> Download from https://nodejs.org/</b></p>
-
-<p><b> Install Bootstrap 3</b></p>
-
-<p>npm install bootstrap@3</p>
-
-<p><b> Install Git, Maven and JDK17</b></p>
-
-<p>in git bash</p>
+<p><b>Install Git</b></p>
 <p>git clone https://github.com/CharlieSwires/payara-test</p>
-<p>This contains both the java and React</p>
-
-build
------
-<p>git bash 1</p>
-<p>cd payara-test</p>
+<p><b>Install Maven</b></p>
+<p><b>Install Docker</b></p>
 <p>mvn clean package</p>
-<p>cd target</p>
-<p>java -jar payara-test.jar</p>
-<p>git bash 2</p>
-<p>cd payara-test/src/main/webapp/luggage-calculator-app</p>
-<p>npm start</p>
+<p>docker build -t luggage-calculator-app .</p>
+<p>docker run -p 9999:9999 luggage-calculator-app</p>
 
 
 browser
 -------
-<p>http://localhost:3000/luggage-calculator-app</p>
+<p>http://localhost:9999/payara</p>
 
 
 RESTful
