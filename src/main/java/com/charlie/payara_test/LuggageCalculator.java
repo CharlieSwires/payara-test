@@ -20,7 +20,7 @@ import com.charlie.payara_test.WeightsToCostConversion.RuleNames;
 
 @RestController
 @RequestMapping(path = "/luggage-calculator")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "*")
 public class LuggageCalculator {
 	Logger log = LoggerFactory.getLogger(LuggageCalculator.class);
 

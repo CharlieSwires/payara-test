@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/payara/static/css/main.a5c1f790.css",
+    "main.js": "/payara/static/js/main.10be4f9e.js",
+    "index.html": "/payara/index.html",
+    "main.a5c1f790.css.map": "/payara/static/css/main.a5c1f790.css.map",
+    "main.10be4f9e.js.map": "/payara/static/js/main.10be4f9e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a5c1f790.css",
+    "static/js/main.10be4f9e.js"
+  ]
+}
