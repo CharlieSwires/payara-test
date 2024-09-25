@@ -147,9 +147,9 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, check
   // Function to generate a unique transaction ID and append the check-in booth ID
   function generateUniqueId() {
     const timestamp = Date.now().toString(); // Milliseconds since epoch
-    const randomNum = Math.floor(Math.random() * 1e11).toString(); // Random number up to 1e11
+    const randomNum = Math.floor(Math.random() * 1e11).toString(); // Random number up to 11 digits
     let transactionId = (timestamp + randomNum).slice(0, 20).padEnd(20, '0');
-    // Append check-in booth ID if provided
+    // Append check-in booth ID with a "-" separator if provided
     if (checkInBoothId) {
       transactionId += `-${checkInBoothId}`;
     }

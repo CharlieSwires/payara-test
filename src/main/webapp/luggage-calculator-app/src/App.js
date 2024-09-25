@@ -3,6 +3,15 @@ import React, { useState } from 'react';
 import WeightsInputScreen from './WeightsInputScreen';
 import LuggageCalculator from './LuggageCalculator';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+  <BrowserRouter basename="/payara">
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState('input'); // 'input' or 'calculator'
@@ -10,7 +19,9 @@ function App() {
   const [selectedPersonIndex, setSelectedPersonIndex] = useState(null); // Index of selected person
   const [peopleList, setPeopleList] = useState(
     Array(5).fill().map(() => ({
-      weights: Array(5).fill(0),
+      name: '',                  // New name field
+      passportNumber: '',         // New passport number field
+      weights: Array(5).fill(0),  // Weights for each person
       amountPaid: '',
       transactionId: ''
     }))
@@ -26,7 +37,6 @@ function App() {
   };
 
   const handleWeightsSubmit = (personIndex) => {
-    // Convert weights to numbers
     const parsedWeights = peopleList[personIndex].weights.map((w) => parseFloat(w) || 0);
     setSelectedWeights(parsedWeights);
     setSelectedPersonIndex(personIndex);
@@ -40,15 +50,21 @@ function App() {
   const handlePayment = (personIndex, amount, transactionId) => {
     const newPeopleList = [...peopleList];
     newPeopleList[personIndex].amountPaid = amount;
-    newPeopleList[personIndex].transactionId = transactionId;
+    newPeopleList[personIndex].transactionId = transactionId; // Includes booth ID
     setPeopleList(newPeopleList);
   };
 
   // New handler for check-in booth ID change
   const handleCheckInBoothIdChange = (value) => {
-    // Allow only digits and limit to 10 characters
-    const sanitizedValue = value.replace(/\D/g, '').slice(0, 10);
+    const sanitizedValue = value.replace(/\D/g, '').slice(0, 10); // Only digits, limit to 10
     setCheckInBoothId(sanitizedValue);
+  };
+
+  // New handler for name and passport number changes
+  const handlePersonDetailsChange = (personIndex, field, value) => {
+    const newPeopleList = [...peopleList];
+    newPeopleList[personIndex][field] = value;
+    setPeopleList(newPeopleList);
   };
 
   return (
@@ -61,6 +77,7 @@ function App() {
           onWeightsSubmit={handleWeightsSubmit}
           checkInBoothId={checkInBoothId}
           onCheckInBoothIdChange={handleCheckInBoothIdChange}
+          onPersonDetailsChange={handlePersonDetailsChange} // Handle name and passport change
         />
       ) : (
         <LuggageCalculator
