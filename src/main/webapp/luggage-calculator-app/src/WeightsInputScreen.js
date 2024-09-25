@@ -19,9 +19,9 @@ function WeightsInputScreen({
   };
 
   return (
-    <Container>
-      {/* Title and Check-in Booth ID on the Same Line */}
-	  <Row className="align-items-center mb-4">
+	   <Container fluid className="px-0">
+	     {/* Title, Check-in Booth ID Label, and Input on the Same Line */}
+	     <Row className="align-items-center mb-4 mx-0">
 	    {/* Title Column */}
 	    <Col xs={12} md={7} className="text-center text-md-left mb-3 mb-md-0">
 	      <h1>Enter Weights for Each Person</h1>
@@ -46,26 +46,25 @@ function WeightsInputScreen({
 	  </Row>
 
 	  {/* Person Data Table */}
-	  <Row className="justify-content-center">
-	    <Col xs={12} lg={12}>
-	      {/* Optional: Wrap in a div to handle overflow */}
-	      <div style={{ overflowX: 'auto' }}>
-	        <Table bordered hover responsive className="text-center" style={{ width: '120%' }}>
-	          <thead className="thead-dark">
-	            <tr>
-	              <th>#</th>
-	              <th width="240px">Full Name</th> {/* 200px * 1.2 = 240px */}
-	              <th width="240px">Passport Number</th> {/* 200px * 1.2 = 240px */}
-	              <th width="108px">W1</th> {/* 90px * 1.2 = 108px */}
-	              <th width="108px">W2</th> {/* 90px * 1.2 = 108px */}
-	              <th width="108px">W3</th> {/* 90px * 1.2 = 108px */}
-	              <th width="108px">W4</th> {/* 90px * 1.2 = 108px */}
-	              <th width="108px">W5</th> {/* 90px * 1.2 = 108px */}
-	              <th>Submit</th>
-	              <th width="120px">Amount Paid</th> {/* 100px * 1.2 = 120px */}
-	              <th width="408px">Transaction ID</th> {/* 340px * 1.2 = 408px */}
-	            </tr>
-	          </thead>
+	       <Row className="justify-content-center mx-0">
+	         <Col xs={12} lg={12}>
+	           <div style={{ overflowX: 'auto' }}>
+		  <Table bordered hover responsive className="text-center">
+		  <thead className="thead-dark">
+		    <tr>
+		      <th style={{ width: '3%' }}>#</th>
+		      <th style={{ width: '15%' }}>Full Name</th>
+		      <th style={{ width: '15%' }}>Passport Number</th>
+		      <th style={{ width: '6%' }}>W1</th>
+		      <th style={{ width: '6%' }}>W2</th>
+		      <th style={{ width: '6%' }}>W3</th>
+		      <th style={{ width: '6%' }}>W4</th>
+		      <th style={{ width: '6%' }}>W5</th>
+		      <th style={{ width: '8%' }}>Submit</th>
+		      <th style={{ width: '8%' }}>Amount Paid</th>
+		      <th style={{ width: '21%' }}>Transaction ID</th>
+		    </tr>
+		  </thead>
 	          <tbody>
 	             {peopleList.map((person, personIndex) => (
                 <tr key={personIndex}>
