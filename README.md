@@ -4,6 +4,8 @@ Luggage Calculator
 Install
 -------
 
+<p><b>Install JDK17</b></p>
+<p><b>Install NodeJS</b></p>
 <p><b>Install Git</b></p>
 <p>git clone https://github.com/CharlieSwires/payara-test</p>
 <p><b>Install Maven</b></p>
