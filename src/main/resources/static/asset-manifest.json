@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/payara/static/css/main.a5c1f790.css",
-    "main.js": "/payara/static/js/main.87e2ce9c.js",
+    "main.js": "/payara/static/js/main.1b505afb.js",
     "index.html": "/payara/index.html",
     "main.a5c1f790.css.map": "/payara/static/css/main.a5c1f790.css.map",
-    "main.87e2ce9c.js.map": "/payara/static/js/main.87e2ce9c.js.map"
+    "main.1b505afb.js.map": "/payara/static/js/main.1b505afb.js.map"
   },
   "entrypoints": [
     "static/css/main.a5c1f790.css",
-    "static/js/main.87e2ce9c.js"
+    "static/js/main.1b505afb.js"
   ]
 }

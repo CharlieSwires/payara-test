@@ -56,8 +56,8 @@ function App() {
 
   // New handler for check-in booth ID change
   const handleCheckInBoothIdChange = (value) => {
-    const sanitizedValue = value.replace(/\D/g, '').slice(0, 10); // Only digits, limit to 10
-    setCheckInBoothId(sanitizedValue);
+    //const sanitizedValue = value.replace(/\D/g, '').slice(0, 10); // Only digits, limit to 10
+    setCheckInBoothId(value);
   };
 
   // New handler for name and passport number changes
