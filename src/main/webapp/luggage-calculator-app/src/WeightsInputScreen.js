@@ -110,6 +110,7 @@ function WeightsInputScreen({
                       disabled={
                         !person.name ||
                         !person.passportNumber ||
+						!checkInBoothId ||
                         person.weights.some((w) => w === '' || isNaN(w))
                       }
                     >
