@@ -10,6 +10,10 @@ Install
 <p>git clone https://github.com/CharlieSwires/payara-test</p>
 <p><b>Install Maven</b></p>
 <p><b>Install Docker</b></p>
+
+Build/Deploy
+------------
+
 <p>mvn clean package</p>
 <p>docker build -t luggage-calculator-app .</p>
 <p>docker run -p 9999:9999 luggage-calculator-app</p>
