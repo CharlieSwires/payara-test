@@ -26,15 +26,15 @@ browser
 User Interface
 --------------
 
-DepthKeeping.java
------------------
+Person and Baggage Details
+--------------------------
 
 <img src="https://raw.githubusercontent.com/CharlieSwires/payara-test/master/PayaraTestScreen1.jpg" width="1920" height="800" alt="PayaraTestScreen1" title="PayaraTestScreen1"/>
 
-EngineRoom.java
----------------
+Cost Calculation
+----------------
 
-<img src="https://raw.githubusercontent.com/CharlieSwires/SubmarineUI/master/PayaraTestScreen2.jpg" width="1920" height="800" alt="PayaraTestScreen2" title="PayaraTestScreen2"/>
+<img src="https://raw.githubusercontent.com/CharlieSwires/payara-test/master/PayaraTestScreen2.jpg" width="1920" height="800" alt="PayaraTestScreen2" title="PayaraTestScreen2"/>
 
 
 
