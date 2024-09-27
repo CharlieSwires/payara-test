@@ -1,7 +1,7 @@
-// src/App.js
 import React, { useState } from 'react';
 import WeightsInputScreen from './WeightsInputScreen';
 import LuggageCalculator from './LuggageCalculator';
+import BaggageTicket from './BaggageTicket';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
@@ -14,21 +14,20 @@ ReactDOM.render(
 );
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState('input'); // 'input' or 'calculator'
+  const [currentScreen, setCurrentScreen] = useState('input'); // 'input', 'calculator', or 'ticket'
   const [selectedWeights, setSelectedWeights] = useState([]);  // Weights selected from Screen 1
   const [selectedPersonIndex, setSelectedPersonIndex] = useState(null); // Index of selected person
   const [peopleList, setPeopleList] = useState(
     Array(5).fill().map(() => ({
-      name: '',                  // New name field
-      passportNumber: '',         // New passport number field
-      weights: Array(5).fill(0),  // Weights for each person
+      name: '',
+      passportNumber: '',
+      weights: Array(5).fill(0),
       amountPaid: '',
       transactionId: ''
     }))
   ); // Data for all people
 
-  const [checkInBoothId, setCheckInBoothId] = useState(''); // New state for check-in booth ID
-  const [error, setError] = useState(null); // Error state if needed
+  const [checkInBoothId, setCheckInBoothId] = useState(''); // Check-in booth ID
 
   const handleWeightsChange = (personIndex, weightIndex, value) => {
     const newPeopleList = [...peopleList];
@@ -50,26 +49,28 @@ function App() {
   const handlePayment = (personIndex, amount, transactionId) => {
     const newPeopleList = [...peopleList];
     newPeopleList[personIndex].amountPaid = amount;
-    newPeopleList[personIndex].transactionId = transactionId; // Includes booth ID
+    newPeopleList[personIndex].transactionId = transactionId;
     setPeopleList(newPeopleList);
   };
 
-  // New handler for check-in booth ID change
   const handleCheckInBoothIdChange = (value) => {
-    //const sanitizedValue = value.replace(/\D/g, '').slice(0, 10); // Only digits, limit to 10
     setCheckInBoothId(value);
   };
 
-  // New handler for name and passport number changes
   const handlePersonDetailsChange = (personIndex, field, value) => {
     const newPeopleList = [...peopleList];
     newPeopleList[personIndex][field] = value;
     setPeopleList(newPeopleList);
   };
 
+  // Handle Print Button Click for showing the Baggage Ticket
+  const handleShowTicket = (personIndex) => {
+    setSelectedPersonIndex(personIndex);
+    setCurrentScreen('ticket');
+  };
+
   return (
     <div className="App">
-      {error && <div style={{ color: 'red' }}>Error: {error.message}</div>}
       {currentScreen === 'input' ? (
         <WeightsInputScreen
           peopleList={peopleList}
@@ -77,15 +78,21 @@ function App() {
           onWeightsSubmit={handleWeightsSubmit}
           checkInBoothId={checkInBoothId}
           onCheckInBoothIdChange={handleCheckInBoothIdChange}
-          onPersonDetailsChange={handlePersonDetailsChange} // Handle name and passport change
+          onPersonDetailsChange={handlePersonDetailsChange}
+          onShowTicket={handleShowTicket}  // For showing the baggage ticket
         />
-      ) : (
+      ) : currentScreen === 'calculator' ? (
         <LuggageCalculator
           weightsInput={selectedWeights}
           personIndex={selectedPersonIndex}
           onBack={handleBackToInput}
           onPayment={handlePayment}
           checkInBoothId={checkInBoothId}
+        />
+      ) : (
+        <BaggageTicket
+          person={peopleList[selectedPersonIndex]}  // Pass the selected person’s data
+          onBack={handleBackToInput}
         />
       )}
     </div>

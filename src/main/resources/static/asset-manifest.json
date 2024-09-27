@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/payara/static/css/main.a5c1f790.css",
-    "main.js": "/payara/static/js/main.1b505afb.js",
+    "main.css": "/payara/static/css/main.78879266.chunk.css",
+    "main.js": "/payara/static/js/main.40e3c681.chunk.js",
+    "main.js.map": "/payara/static/js/main.40e3c681.chunk.js.map",
+    "runtime~main.js": "/payara/static/js/runtime~main.9fe714f8.js",
+    "runtime~main.js.map": "/payara/static/js/runtime~main.9fe714f8.js.map",
+    "static/js/2.1afd739d.chunk.js": "/payara/static/js/2.1afd739d.chunk.js",
+    "static/js/2.1afd739d.chunk.js.map": "/payara/static/js/2.1afd739d.chunk.js.map",
     "index.html": "/payara/index.html",
-    "main.a5c1f790.css.map": "/payara/static/css/main.a5c1f790.css.map",
-    "main.1b505afb.js.map": "/payara/static/js/main.1b505afb.js.map"
-  },
-  "entrypoints": [
-    "static/css/main.a5c1f790.css",
-    "static/js/main.1b505afb.js"
-  ]
+    "precache-manifest.312281d286bad41dce2e44591ddf0e9e.js": "/payara/precache-manifest.312281d286bad41dce2e44591ddf0e9e.js",
+    "service-worker.js": "/payara/service-worker.js",
+    "static/css/main.78879266.chunk.css.map": "/payara/static/css/main.78879266.chunk.css.map"
+  }
 }
