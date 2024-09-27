@@ -36,6 +36,11 @@ Cost Calculation
 
 <img src="https://raw.githubusercontent.com/CharlieSwires/payara-test/master/PayaraTestScreen2.jpg" width="1920" height="800" alt="PayaraTestScreen2" title="PayaraTestScreen2"/>
 
+Baggage Ticket
+--------------
+
+<img src="https://raw.githubusercontent.com/CharlieSwires/payara-test/master/BaggageTicketScreen3.jpg" width="800" height="800" alt="PayaraTestScreen3" title="PayaraTestScreen3"/>
+
 
 
 RESTful
