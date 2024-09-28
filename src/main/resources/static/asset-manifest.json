@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/payara/static/css/main.78879266.chunk.css",
-    "main.js": "/payara/static/js/main.1036b807.chunk.js",
-    "main.js.map": "/payara/static/js/main.1036b807.chunk.js.map",
+    "main.js": "/payara/static/js/main.5575f20c.chunk.js",
+    "main.js.map": "/payara/static/js/main.5575f20c.chunk.js.map",
     "runtime~main.js": "/payara/static/js/runtime~main.9fe714f8.js",
     "runtime~main.js.map": "/payara/static/js/runtime~main.9fe714f8.js.map",
-    "static/js/2.c5c8264e.chunk.js": "/payara/static/js/2.c5c8264e.chunk.js",
-    "static/js/2.c5c8264e.chunk.js.map": "/payara/static/js/2.c5c8264e.chunk.js.map",
+    "static/js/2.75d5cf23.chunk.js": "/payara/static/js/2.75d5cf23.chunk.js",
+    "static/js/2.75d5cf23.chunk.js.map": "/payara/static/js/2.75d5cf23.chunk.js.map",
     "index.html": "/payara/index.html",
-    "precache-manifest.fe6893bec305f18c101761eaa607ac75.js": "/payara/precache-manifest.fe6893bec305f18c101761eaa607ac75.js",
+    "precache-manifest.79fe6dbd7f45e3bd863d2482d85419ec.js": "/payara/precache-manifest.79fe6dbd7f45e3bd863d2482d85419ec.js",
     "service-worker.js": "/payara/service-worker.js",
     "static/css/main.78879266.chunk.css.map": "/payara/static/css/main.78879266.chunk.css.map"
   }

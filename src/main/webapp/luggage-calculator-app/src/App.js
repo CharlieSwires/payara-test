@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import WeightsInputScreen from './WeightsInputScreen';
 import LuggageCalculator from './LuggageCalculator';
 import PaymentScreen from './PaymentScreen'; // PaymentScreen component
+import BaggageTicket from './BaggageTicket';  // Import the BaggageTicket component
 import './App.css';
 
 function App() {
@@ -73,6 +74,11 @@ function App() {
   const handlePaymentDeclined = () => {
 	handlePayment(selectedPersonIndex, null, null);
   };
+  // Function to handle showing ticket (screen 3)
+  const handleShowTicket = (personIndex) => {
+    setSelectedPersonIndex(personIndex); // Set the person to show ticket for
+    setCurrentScreen('ticket'); // Navigate to ticket screen
+  };
 
   // Generate unique transaction ID
   function generateUniqueId() {
@@ -96,6 +102,7 @@ function App() {
           checkInBoothId={checkInBoothId}
           onCheckInBoothIdChange={handleCheckInBoothIdChange}
           onPersonDetailsChange={handlePersonDetailsChange}
+		  onShowTicket={handleShowTicket} // Pass the ticket handling function
         />
       ) : currentScreen === 'calculator' ? (
         <LuggageCalculator
@@ -105,7 +112,12 @@ function App() {
           onPay={handlePay}  // Handle payment navigation
           checkInBoothId={checkInBoothId}
         />
-      ) : (
+      ) : currentScreen === 'ticket' ? (
+		<BaggageTicket
+		  person={peopleList[selectedPersonIndex]} // Pass the person details to the ticket screen
+		  onBack={handleBackToInput} // Add a back button to return to the input screen
+		/>
+	   ) : (
         <PaymentScreen
           amount={paymentAmount}
           onPaymentAccepted={handlePaymentAccepted}  // Navigate back with accepted payment

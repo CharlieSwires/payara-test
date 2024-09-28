@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/payara/precache-manifest.fe6893bec305f18c101761eaa607ac75.js"
+  "/payara/precache-manifest.79fe6dbd7f45e3bd863d2482d85419ec.js"
 );
 
 self.addEventListener('message', (event) => {
