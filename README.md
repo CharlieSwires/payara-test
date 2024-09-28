@@ -41,6 +41,11 @@ Baggage Ticket
 
 <img src="https://raw.githubusercontent.com/CharlieSwires/payara-test/master/BaggageTicketScreen3.jpg" width="800" height="800" alt="PayaraTestScreen3" title="PayaraTestScreen3"/>
 
+Payment Screen
+--------------
+
+<img src="https://raw.githubusercontent.com/CharlieSwires/payara-test/master/PaymentScreen.png" width="800" height="800" alt="PaymentScreen" title="PaymentScreen"/>
+
 
 
 RESTful
