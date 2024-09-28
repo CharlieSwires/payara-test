@@ -11,7 +11,7 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPay, checkInBo
 
   // Fetch rules from the backend when the component mounts
   useEffect(() => {
-    fetch('http://localhost:9999/payara/luggage-calculator/rules')
+    fetch('https://localhost:8443/payara/luggage-calculator/rules')
       .then((response) => {
         if (!response.ok) {
           throw new Error(
@@ -42,7 +42,7 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPay, checkInBo
       weights: weightsInput.map((w) => parseFloat(w) || 0), // Ensure values are numbers
     };
 
-    fetch('http://localhost:9999/payara/luggage-calculator/min-cost', {
+    fetch('https://localhost:8443/payara/luggage-calculator/min-cost', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPay, checkInBo
       names: names,
     };
 
-    fetch('http://localhost:9999/payara/luggage-calculator/cost', {
+    fetch('https://localhost:8443/payara/luggage-calculator/cost', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

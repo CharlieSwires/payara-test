@@ -17,6 +17,7 @@ RUN mvn dependency:go-offline
 COPY src ./src
 # Copy the React build artifacts into the static resources
 COPY --from=react-build /app/build/ ./src/main/resources/static/
+COPY src/main/resources/keystore.p12 ./keystore.p12
 # Package the application
 RUN mvn clean package -DskipTests
 
@@ -24,5 +25,5 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=maven-build /app/target/*.jar app.jar
-EXPOSE 9999
+EXPOSE 8443
 ENTRYPOINT ["java", "-Xss8m", "-jar", "app.jar"]

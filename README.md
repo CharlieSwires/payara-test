@@ -16,12 +16,12 @@ Build/Deploy
 
 <p>mvn clean package</p>
 <p>docker build -t luggage-calculator-app .</p>
-<p>docker run -p 9999:9999 luggage-calculator-app</p>
+<p>docker run -p 8443:8443 luggage-calculator-app</p>
 
 
 browser
 -------
-<p>http://localhost:9999/payara</p>
+<p>https://localhost:8443/payara</p>
 
 User Interface
 --------------
@@ -51,8 +51,8 @@ Payment Screen
 RESTful
 -------
 
-<p>GET http://localhost:9999/payara/luggage-calculator/rules</p>
-<p>POST http://localhost:9999/payara/luggage-calculator/min-cost</p>
-<p>POST http://localhost:9999/payara/luggage-calculator/cost</p>
+<p>GET https://localhost:8443/payara/luggage-calculator/rules</p>
+<p>POST https://localhost:8443/payara/luggage-calculator/min-cost</p>
+<p>POST https://localhost:8443/payara/luggage-calculator/cost</p>
 
 
