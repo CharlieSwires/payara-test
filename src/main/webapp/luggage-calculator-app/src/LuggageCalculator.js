@@ -1,7 +1,6 @@
-// src/LuggageCalculator.js
 import React, { useState, useEffect } from 'react';
 
-function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, checkInBoothId }) {
+function LuggageCalculator({ weightsInput, personIndex, onBack, onPay, checkInBoothId }) {
   const [data, setData] = useState([]);
   const [rules, setRules] = useState([]);
   const [loading, setLoading] = useState(false); 
@@ -32,7 +31,6 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, check
 
   useEffect(() => {
     handleSubmit(); // Automatically submit when weightsInput changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weightsInput]);
 
   const handleSubmit = () => {
@@ -123,7 +121,6 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, check
       .then((response) => {
         return response.text().then((text) => {
           if (!response.ok) {
-            // Throw an error with the response text
             throw new Error(
               text || `Server error: ${response.status} ${response.statusText}`
             );
@@ -144,25 +141,10 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, check
       });
   };
 
-  // Function to generate a unique transaction ID and append the check-in booth ID
-  function generateUniqueId() {
-    const timestamp = Date.now().toString(); // Milliseconds since epoch
-    const randomNum = Math.floor(Math.random() * 1e11).toString(); // Random number up to 11 digits
-    let transactionId = (timestamp + randomNum).slice(0, 20).padEnd(20, '0');
-    // Append check-in booth ID with a "-" separator if provided
-    if (checkInBoothId) {
-      transactionId += `-${checkInBoothId}`;
-    }
-    return transactionId;
-  }
-
   const handlePayMinimum = () => {
     if (minimumAmount !== null) {
-      const transactionId = generateUniqueId();
-      onPayment(personIndex, minimumAmount, transactionId);
-      alert(
-        `Payment of ${minimumAmount} processed with Transaction ID: ${transactionId}`
-      );
+      // Call onPay and pass personIndex and minimumAmount to navigate to PaymentScreen
+      onPay(personIndex, minimumAmount);  // Pass payment and navigate to PaymentScreen
     } else {
       alert('Minimum amount is not available.');
     }
@@ -170,11 +152,8 @@ function LuggageCalculator({ weightsInput, personIndex, onBack, onPayment, check
 
   const handlePayUserDefined = () => {
     if (userDefinedAmount !== null) {
-      const transactionId = generateUniqueId();
-      onPayment(personIndex, userDefinedAmount, transactionId);
-      alert(
-        `Payment of ${userDefinedAmount} processed with Transaction ID: ${transactionId}`
-      );
+      // Call onPay and pass personIndex and userDefinedAmount to navigate to PaymentScreen
+      onPay(personIndex, userDefinedAmount);  // Pass payment and navigate to PaymentScreen
     } else {
       alert('User-defined amount is not available.');
     }

@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
 import WeightsInputScreen from './WeightsInputScreen';
 import LuggageCalculator from './LuggageCalculator';
-import BaggageTicket from './BaggageTicket';
+import PaymentScreen from './PaymentScreen'; // PaymentScreen component
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-
-ReactDOM.render(
-  <BrowserRouter basename="/payara">
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
-);
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState('input'); // 'input', 'calculator', or 'ticket'
+  const [currentScreen, setCurrentScreen] = useState('input'); // 'input', 'calculator', 'payment'
   const [selectedWeights, setSelectedWeights] = useState([]);  // Weights selected from Screen 1
   const [selectedPersonIndex, setSelectedPersonIndex] = useState(null); // Index of selected person
   const [peopleList, setPeopleList] = useState(
@@ -28,6 +19,9 @@ function App() {
   ); // Data for all people
 
   const [checkInBoothId, setCheckInBoothId] = useState(''); // Check-in booth ID
+
+  // Payment state
+  const [paymentAmount, setPaymentAmount] = useState(null);
 
   const handleWeightsChange = (personIndex, weightIndex, value) => {
     const newPeopleList = [...peopleList];
@@ -51,6 +45,7 @@ function App() {
     newPeopleList[personIndex].amountPaid = amount;
     newPeopleList[personIndex].transactionId = transactionId;
     setPeopleList(newPeopleList);
+    setCurrentScreen('input'); // Go back to input screen after payment
   };
 
   const handleCheckInBoothIdChange = (value) => {
@@ -63,11 +58,33 @@ function App() {
     setPeopleList(newPeopleList);
   };
 
-  // Handle Print Button Click for showing the Baggage Ticket
-  const handleShowTicket = (personIndex) => {
+  // Navigate to Payment Screen
+  const handlePay = (personIndex, amount) => {
+    setPaymentAmount(amount);  // Pass the amount to be paid
     setSelectedPersonIndex(personIndex);
-    setCurrentScreen('ticket');
+    setCurrentScreen('payment');  // Navigate to payment screen
   };
+
+  const handlePaymentAccepted = () => {
+    const transactionId = generateUniqueId();  // Generate new transaction ID
+    handlePayment(selectedPersonIndex, paymentAmount, transactionId);
+  };
+
+  const handlePaymentDeclined = () => {
+	handlePayment(selectedPersonIndex, null, null);
+  };
+
+  // Generate unique transaction ID
+  function generateUniqueId() {
+    const timestamp = Date.now().toString(); // Milliseconds since epoch
+    const randomNum = Math.floor(Math.random() * 1e11).toString(); // Random number up to 11 digits
+    let transactionId = (timestamp + randomNum).slice(0, 20).padEnd(20, '0');
+    // Append check-in booth ID with a "-" separator if provided
+    if (checkInBoothId) {
+      transactionId += `-${checkInBoothId}`;
+    }
+    return transactionId;
+  }
 
   return (
     <div className="App">
@@ -79,20 +96,20 @@ function App() {
           checkInBoothId={checkInBoothId}
           onCheckInBoothIdChange={handleCheckInBoothIdChange}
           onPersonDetailsChange={handlePersonDetailsChange}
-          onShowTicket={handleShowTicket}  // For showing the baggage ticket
         />
       ) : currentScreen === 'calculator' ? (
         <LuggageCalculator
           weightsInput={selectedWeights}
           personIndex={selectedPersonIndex}
           onBack={handleBackToInput}
-          onPayment={handlePayment}
+          onPay={handlePay}  // Handle payment navigation
           checkInBoothId={checkInBoothId}
         />
       ) : (
-        <BaggageTicket
-          person={peopleList[selectedPersonIndex]}  // Pass the selected person’s data
-          onBack={handleBackToInput}
+        <PaymentScreen
+          amount={paymentAmount}
+          onPaymentAccepted={handlePaymentAccepted}  // Navigate back with accepted payment
+          onPaymentDeclined={handlePaymentDeclined}  // Navigate back with declined payment
         />
       )}
     </div>
