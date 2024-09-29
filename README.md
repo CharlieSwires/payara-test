@@ -66,3 +66,19 @@ Keys(self cert)
 -keystore keystore.p12 -storetype PKCS12 -validity 3650 \
 -storepass your_keystore_password</b></p>
 <p>put in /src/main/resources</> 
+
+<p><b>.env</b></p>
+<code>
+<p>HTTPS=true</p>
+<p>SSL_CRT_FILE=src/main/resources/static/cert.pem</p>
+<p>SSL_KEY_FILE=src/main/resources/static/key.pem</p>
+</code>
+<p><b>application.properties</b</p>
+<code>
+<p>server.servlet.context-path=/payara</p>
+<p>server.port=8443</p>
+<p>server.ssl.key-store=classpath:keystore.p12</p>
+<p>server.ssl.key-store-password=</p>
+<p>server.ssl.key-store-type=PKCS12</p>
+<p>server.ssl.key-alias=tomcat</p>
+</code>
