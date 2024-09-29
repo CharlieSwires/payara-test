@@ -55,4 +55,14 @@ RESTful
 <p>POST https://localhost:8443/payara/luggage-calculator/min-cost</p>
 <p>POST https://localhost:8443/payara/luggage-calculator/cost</p>
 
+Keys(self cert)
+---------------
 
+<p><b>openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes \
+-subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/OU=YourUnit/CN=yourdomain.com/emailAddress=youremail@example.com"
+</b></p>
+<p>put these two in /src/main/webapp/luggage-calculator-app</p>
+<p><b>keytool -genkeypair -alias tomcat -keyalg RSA -keysize 2048 \
+-keystore keystore.p12 -storetype PKCS12 -validity 3650 \
+-storepass your_keystore_password</b></p>
+<p>put in /src/main/resources</> 
