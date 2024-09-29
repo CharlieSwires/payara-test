@@ -73,7 +73,7 @@ Keys(self cert)
 <p>SSL_CRT_FILE=src/main/resources/static/cert.pem</p>
 <p>SSL_KEY_FILE=src/main/resources/static/key.pem</p>
 </code>
-<p><b>application.properties</b</p>
+<p><b>application.properties</b></p>
 <code>
 <p>server.servlet.context-path=/payara</p>
 <p>server.port=8443</p>
