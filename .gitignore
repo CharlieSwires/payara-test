@@ -4,5 +4,5 @@ src/main/webapp/luggage-calculator-app/node_modules
 src/main/webapp/luggage-calculator-app/node
 node/node.exe
 src/main/webapp/luggage-calculator-app/node/node.exe
-src/main/resources/application.properties
+application.properties
 src/main/resources/keystore.p12
