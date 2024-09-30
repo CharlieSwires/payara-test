@@ -69,16 +69,16 @@ Keys(self cert)
 
 <p><b>.env</b></p>
 <code>
-<p>HTTPS=true</p>
-<p>SSL_CRT_FILE=src/main/resources/static/cert.pem</p>
-<p>SSL_KEY_FILE=src/main/resources/static/key.pem</p>
+HTTPS=true<br />
+SSL_CRT_FILE=src/main/resources/static/cert.pem<br />
+SSL_KEY_FILE=src/main/resources/static/key.pem<br />
 </code>
 <p><b>application.properties</b></p>
 <code>
-<p>server.servlet.context-path=/payara</p>
-<p>server.port=8443</p>
-<p>server.ssl.key-store=classpath:keystore.p12</p>
-<p>server.ssl.key-store-password=</p>
-<p>server.ssl.key-store-type=PKCS12</p>
-<p>server.ssl.key-alias=tomcat</p>
+server.servlet.context-path=/payara<br />
+server.port=8443<br />
+server.ssl.key-store=classpath:keystore.p12<br />
+server.ssl.key-store-password=<br />
+server.ssl.key-store-type=PKCS12<br />
+server.ssl.key-alias=tomcat<br />
 </code>
