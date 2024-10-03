@@ -1,15 +1,18 @@
 package com.charlie.payara_test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.charlie.payara_test.WeightsToCostConversion.ReturnValues;
 
 @Service
 public class CalculateMinimumPrice {
-
+	private Logger log = LoggerFactory.getLogger(CalculateMinimumPrice.class);
 	private WeightPermutations wp = null;
 	private WeightsToCostConversion wtcc = null;
 
@@ -46,7 +49,6 @@ public class CalculateMinimumPrice {
 				listOfSelected.add(result2.selected);
 			}
 		}
-		
 		Double minCost = listOfCosts.get(0);
 		int minI = 0;
 		for (int i = 0; i < output.size(); i++) {
@@ -58,6 +60,7 @@ public class CalculateMinimumPrice {
 		
 		Touple tempItem = new Touple(""+minCost, "Cost");
 		result.add(tempItem);
+		
 		for (int i = 0; i < output.get(minI).length; i++) {
 			tempItem = new Touple(""+(output.get(minI))[i], listOfSelected.get(minI).get(i));
 			result.add(tempItem);

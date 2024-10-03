@@ -53,7 +53,7 @@ public class WeightsToCostConversion {
 		public Double price;
 		public List<String> selected;
 	}
-	
+
 	public HashMap<String,Integer> singles = new HashMap<String,Integer>();
 	public WeightsToCostConversion() {
 		singles = new HashMap<String,Integer>();
@@ -72,89 +72,93 @@ public class WeightsToCostConversion {
 	public ReturnValues processArrayOfWeights(Double[] weights, HashMap<String,Integer> singles) {
 		Double sum = 0.0;
 		List<String> selected = new ArrayList<>();
-		for(int i = 0; i < weights.length; i++) {
-			boolean contin = false;
+		boolean contin = false;
+
+		for(Double weight : weights) {
+			contin = false;
 			for(RuleNames item : RuleNames.values()) {
-				if (contin) continue;
+				if (!contin) {
 
-				switch(item.name()) {
-				case "FREE_ZERO_CASE":
-					if (singles.get("FREE_ZERO_CASE") == USED_MANY) {
-						if (weights[i].toString().equals(item.getOver().toString()) &&
-								weights[i].toString().equals(item.getUnder().toString())) {
-							sum += item.getPrice();
-							selected.add(item.name());
-							contin = true;
-						} 
-					} else {
-						throw new RuntimeException(item.name() + " - expected USED_MANY!!");
-					}
-					break;
-				case "FREE_UNDER_7KG_OVERWEIGHT":
-					int timesLeft = singles.get("FREE_UNDER_7KG_OVERWEIGHT");
+					switch(item.name()) {
+					case "FREE_ZERO_CASE":
+						if (singles.get("FREE_ZERO_CASE") == USED_MANY) {
+							if (weight.toString().equals(item.getOver().toString()) &&
+									weight.toString().equals(item.getUnder().toString())) {
+								sum += item.getPrice();
+								selected.add(item.name());
+								contin = true;
+							} 
+						} else {
+							throw new RuntimeException(item.name() + " - expected USED_MANY!!");
+						}
+						break;
+					case "FREE_UNDER_7KG_OVERWEIGHT":
+						int timesLeft = singles.get("FREE_UNDER_7KG_OVERWEIGHT");
 
-					if (timesLeft > 0) {
-						if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
-							singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
-							selected.add(item.name());
-							contin = true;
-						} else if (weights[i] > item.getUnder()) {
-							sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weights[i] - item.getUnder());
-							singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
-							selected.add(item.name());
-							contin = true;
+						if (timesLeft > 0) {
+							if (weight > item.getOver() && weight <= item.getUnder()) {
+								singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
+								selected.add(item.name());
+								contin = true;
+							} else if (weight > item.getUnder()) {
+								sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weight - item.getUnder());
+								singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
+								selected.add(item.name());
+								contin = true;
+							}
 						}
-					}
-					break;
-				case "FREE_UNDER_25KG_OVERWEIGHT":
-					timesLeft = singles.get("FREE_UNDER_25KG_OVERWEIGHT");
-					if (timesLeft  > 0) {
-						if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
-							singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft);
-							selected.add(item.name());
-							contin = true;
-						} else if (weights[i] > item.getUnder()) {
-							sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weights[i] - item.getUnder());
-							singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft);
-							selected.add(item.name());
-							contin = true;
+						break;
+					case "FREE_UNDER_25KG_OVERWEIGHT":
+						timesLeft = singles.get("FREE_UNDER_25KG_OVERWEIGHT");
+						if (timesLeft  > 0) {
+							if (weight > item.getOver() && weight <= item.getUnder()) {
+								singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft);
+								selected.add(item.name());
+								contin = true;
+							} else if (weight > item.getUnder()) {
+								sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weight - item.getUnder());
+								singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft);
+								selected.add(item.name());
+								contin = true;
+							}
 						}
-					}
-					break;
-				case "FEE_UNDER_7KG":
-					if (singles.get("FEE_UNDER_7KG") == USED_MANY) {
-						if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
-							sum += item.getPrice();
-							selected.add(item.name());
-							contin = true;
-						} 
-					} else {
-						throw new RuntimeException(item.name() + " - expected USED_MANY!!");
-					}
-					break;
-				case "FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT":
-					if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY) {
-						if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
-							sum += item.getPrice();
-							selected.add(item.name());
-							contin = true;
-						} else if (weights[i] > item.getUnder()) {
-							sum += item.getPrice();
-							sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weights[i] - item.getUnder());
-							selected.add(item.name());
-							contin = true;
+						break;
+					case "FEE_UNDER_7KG":
+						if (singles.get("FEE_UNDER_7KG") == USED_MANY) {
+							if (weight > item.getOver() && weight <= item.getUnder()) {
+								sum += item.getPrice();
+								selected.add(item.name());
+								contin = true;
+							} 
+						} else {
+							throw new RuntimeException(item.name() + " - expected USED_MANY!!");
 						}
-					} else {
-						throw new RuntimeException(item.name() + " - expected USED_MANY!!");
+						break;
+					case "FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT":
+						if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY) {
+							if (weight > item.getOver() && weight <= item.getUnder()) {
+								sum += item.getPrice();
+								selected.add(item.name());
+								contin = true;
+							} else if (weight > item.getUnder()) {
+								sum += item.getPrice();
+								sum += RuleNames.valueOf("OVERWEIGHT").getPrice() * (weight - item.getUnder());
+								selected.add(item.name());
+								contin = true;
+							}
+						} else {
+							throw new RuntimeException(item.name() + " - expected USED_MANY!!");
+						}
+						break;
+					case "OVERWEIGHT":
+						break;
+					default:
+						throw new RuntimeException("Not Implemented");
 					}
-					break;
-				case "OVERWEIGHT":
-					break;
-				default:
-					throw new RuntimeException("Not Implemented");
 				}
 			}
 		}
+
 		ReturnValues result = new ReturnValues(sum, selected);
 		return result;
 	}
@@ -181,7 +185,7 @@ public class WeightsToCostConversion {
 				int timesLeft = singles.get("FREE_UNDER_7KG_OVERWEIGHT");
 
 				if (timesLeft > 0) {
-					if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
+					if (weights[i] > item.getOver() && weights[i] <= item.getUnder()) {
 						singles.put("FREE_UNDER_7KG_OVERWEIGHT", --timesLeft);
 						continue;
 					} else if (weights[i] > item.getUnder()) {
@@ -198,7 +202,7 @@ public class WeightsToCostConversion {
 				int timesLeft2 = singles.get("FREE_UNDER_25KG_OVERWEIGHT");
 
 				if (timesLeft2  > 0) {
-					if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
+					if (weights[i] > item.getOver() && weights[i] <= item.getUnder()) {
 						singles.put("FREE_UNDER_25KG_OVERWEIGHT", --timesLeft2);
 						continue;
 					} else if (weights[i] > item.getUnder()) {
@@ -213,7 +217,7 @@ public class WeightsToCostConversion {
 				}
 			case "FEE_UNDER_7KG":
 				if (singles.get("FEE_UNDER_7KG") == USED_MANY) {
-					if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
+					if (weights[i] > item.getOver() && weights[i] <= item.getUnder()) {
 						sum += item.getPrice();
 						continue;
 					} else {
@@ -224,7 +228,7 @@ public class WeightsToCostConversion {
 				}
 			case "FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT":
 				if (singles.get("FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT") == USED_MANY) {
-					if (weights[i] >= item.getOver() && weights[i] < item.getUnder()) {
+					if (weights[i] > item.getOver() && weights[i] <= item.getUnder()) {
 						sum += item.getPrice();
 						continue;
 					} else if (weights[i] > item.getUnder()) {
@@ -246,12 +250,12 @@ public class WeightsToCostConversion {
 
 		return sum;
 	}
-	
+
 	public Double processArrayOfWeightsGivenNamesCaller(Double[] weights, String[] names) {
 		reset();
 		return processArrayOfWeightsGivenNames(weights, names, singles);
 	}
-	
+
 	public ReturnValues processArrayOfWeightsCaller(Double[] weights) {
 		reset();
 		return processArrayOfWeights(weights, singles);
