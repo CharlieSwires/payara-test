@@ -16,8 +16,7 @@ Build/Deploy
 
 <p>mvn clean package</p>
 <p>docker build -t luggage-calculator-app .</p>
-<p>docker run -p 8443:8443 luggage-calculator-app</p>
-
+<p>docker run -e KEYSTORE_PASSWORD=? -p 8443:8443 luggage-calculator-app</p>
 
 browser
 -------

@@ -19,7 +19,8 @@ COPY src ./src
 COPY src/main/webapp/luggage-calculator-app/cert.pem /app/build/
 COPY src/main/webapp/luggage-calculator-app/key.pem /app/build/
 COPY --from=react-build /app/build/ ./src/main/resources/static/
-COPY src/main/resources/keystore.p12 ./keystore.p12
+COPY src/main/resources/keystore.p12 /app/src/main/resources/keystore.p12
+RUN chmod 644 /app/src/main/resources/keystore.p12
 # Package the application
 RUN mvn clean package -DskipTests
 
