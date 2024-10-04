@@ -126,15 +126,15 @@ public class AppTest {
 	@Test
 	public void calculateMinPrice() {
 		// Given array of 5 weights in kilograms
-		Double[] weights = {35.0, 10.0, 11.0, 4.0, 1.0};
+		Double[] weights = {25.0, 25.0, 7.0, 7.0, 7.0};
 		List<Touple> result = cmp.calculateMinimumPrice(weights);
 //		System.out.println(Arrays.toString(result.toArray()));
-		assertTrue(("[Touple [amount=110.0, enumeration=Cost], "
-				+ "Touple [amount=10.0, enumeration=FREE_UNDER_7KG_OVERWEIGHT], "
-				+ "Touple [amount=35.0, enumeration=FREE_UNDER_25KG_OVERWEIGHT], "
-				+ "Touple [amount=11.0, enumeration=FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT], "
-				+ "Touple [amount=4.0, enumeration=FEE_UNDER_7KG], "
-				+ "Touple [amount=1.0, enumeration=FEE_UNDER_7KG]]"
+		assertTrue(("[Touple [amount=45.0, enumeration=Cost], "
+				+ "Touple [amount=7.0, enumeration=FREE_UNDER_7KG_OVERWEIGHT], "
+				+ "Touple [amount=25.0, enumeration=FREE_UNDER_25KG_OVERWEIGHT], "
+				+ "Touple [amount=25.0, enumeration=FEE_BETWEEN_7KG_AND_25KG_OVERWEIGHT], "
+				+ "Touple [amount=7.0, enumeration=FEE_UNDER_7KG], "
+				+ "Touple [amount=7.0, enumeration=FEE_UNDER_7KG]]"
 				).equals(Arrays.toString(result.toArray())));
 	}
 	@Test
