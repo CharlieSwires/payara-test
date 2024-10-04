@@ -149,6 +149,7 @@ public class AppTest {
 					weights[i] = rnd.nextDouble()*30.0;
 				}
 				List<Touple> result = cmp.calculateMinimumPrice(weights);
+				assertTrue(weights.length == result.size() - 1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
