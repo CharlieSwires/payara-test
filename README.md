@@ -72,12 +72,3 @@ HTTPS=true<br />
 SSL_CRT_FILE=src/main/resources/static/cert.pem<br />
 SSL_KEY_FILE=src/main/resources/static/key.pem<br />
 </code>
-<p><b>application.properties</b></p>
-<code>
-server.servlet.context-path=/payara<br />
-server.port=8443<br />
-server.ssl.key-store=classpath:keystore.p12<br />
-server.ssl.key-store-password=<br />
-server.ssl.key-store-type=PKCS12<br />
-server.ssl.key-alias=tomcat<br />
-</code>
