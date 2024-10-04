@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -48,16 +49,16 @@ public class AppTest {
 
 		// Generate and print all permutations
 		List<Double[]> outputPerm = wp.generatePermutationsCaller(weightsPerm, 0);
-//		try (BufferedWriter writer = new BufferedWriter(new FileWriter("permutations.txt"))) {
-//			// Generate and write all permutations
-//			for (int i = 0; i < outputPerm.size(); i++) {
-//				writer.write(Arrays.toString(outputPerm.get(i)));
-//				writer.newLine();
-//			}
-//			System.out.println("All permutations have been written to permutations.txt");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		//		try (BufferedWriter writer = new BufferedWriter(new FileWriter("permutations.txt"))) {
+		//			// Generate and write all permutations
+		//			for (int i = 0; i < outputPerm.size(); i++) {
+		//				writer.write(Arrays.toString(outputPerm.get(i)));
+		//				writer.newLine();
+		//			}
+		//			System.out.println("All permutations have been written to permutations.txt");
+		//		} catch (IOException e) {
+		//			e.printStackTrace();
+		//		}
 		List<String> filePermutations = new ArrayList<>();
 		try {
 			filePermutations = Files.readAllLines(Paths.get("permutations.txt"));
@@ -93,19 +94,19 @@ public class AppTest {
 				listOfSelected.add(result.selected);
 			}
 		}
-//		try (BufferedWriter writer = new BufferedWriter(new FileWriter("costs.txt"))) {
-//			// Generate and write all permutations
-//			for (int i = 0; i < output.size(); i++) {
-//				writer.write(""+listOfCosts.get(i)+Arrays.toString(output.get(i)));
-//				for (String item : listOfSelected.get(i)){
-//					writer.write(""+item+",");
-//				}
-//				writer.newLine();
-//			}
-//			System.out.println("All permutations have been written to costs.txt");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		//		try (BufferedWriter writer = new BufferedWriter(new FileWriter("costs.txt"))) {
+		//			// Generate and write all permutations
+		//			for (int i = 0; i < output.size(); i++) {
+		//				writer.write(""+listOfCosts.get(i)+Arrays.toString(output.get(i)));
+		//				for (String item : listOfSelected.get(i)){
+		//					writer.write(""+item+",");
+		//				}
+		//				writer.newLine();
+		//			}
+		//			System.out.println("All permutations have been written to costs.txt");
+		//		} catch (IOException e) {
+		//			e.printStackTrace();
+		//		}
 
 		List<String> filePermutations = new ArrayList<>();
 		try {
@@ -128,7 +129,7 @@ public class AppTest {
 		// Given array of 5 weights in kilograms
 		Double[] weights = {25.0, 25.0, 7.0, 7.0, 7.0};
 		List<Touple> result = cmp.calculateMinimumPrice(weights);
-//		System.out.println(Arrays.toString(result.toArray()));
+		//		System.out.println(Arrays.toString(result.toArray()));
 		assertTrue(("[Touple [amount=45.0, enumeration=Cost], "
 				+ "Touple [amount=7.0, enumeration=FREE_UNDER_7KG_OVERWEIGHT], "
 				+ "Touple [amount=25.0, enumeration=FREE_UNDER_25KG_OVERWEIGHT], "
@@ -136,6 +137,24 @@ public class AppTest {
 				+ "Touple [amount=7.0, enumeration=FEE_UNDER_7KG], "
 				+ "Touple [amount=7.0, enumeration=FEE_UNDER_7KG]]"
 				).equals(Arrays.toString(result.toArray())));
+	}
+	@Test
+	public void calculateMinPriceRandom() {
+		// Given array of 5 weights in kilograms
+		Double[] weights = new Double[5];
+		try {
+			for (int count = 0; count < 1000; count++) {
+				Random rnd = new Random(0);
+				for (int i = 0; i < weights.length; i++) {
+					weights[i] = rnd.nextDouble()*30.0;
+				}
+				List<Touple> result = cmp.calculateMinimumPrice(weights);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+		assertTrue(true);
 	}
 	@Test
 	public void calculatePrice() {
@@ -147,7 +166,7 @@ public class AppTest {
 				"FEE_UNDER_7KG",
 		"FEE_UNDER_7KG"};
 		Double result = wtcc.processArrayOfWeightsGivenNamesCaller(weights, names);
-//		System.out.println("Result="+result.toString());
+		//		System.out.println("Result="+result.toString());
 		assertTrue("110.0".equals(result.toString()));
 
 	}
@@ -162,7 +181,7 @@ public class AppTest {
 				"FEE_UNDER_7KG",
 		"FEE_UNDER_7KG"};
 		Double result = wtcc.processArrayOfWeightsGivenNamesCaller(weights, names);
-//		System.out.println("Result="+result.toString());
+		//		System.out.println("Result="+result.toString());
 		assertTrue("185.0".equals(result.toString()));
 
 	}
