@@ -142,9 +142,9 @@ public class AppTest {
 	public void calculateMinPriceRandom() {
 		// Given array of 5 weights in kilograms
 		Double[] weights = new Double[5];
+		Random rnd = new Random(0);
 		try {
 			for (int count = 0; count < 1000; count++) {
-				Random rnd = new Random(0);
 				for (int i = 0; i < weights.length; i++) {
 					weights[i] = rnd.nextDouble()*30.0;
 				}
